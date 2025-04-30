@@ -8,7 +8,6 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.9.0",
-    "babel": "^5.8.38",
     "lodash": "^4.17.20",
     "lucide-react": "^0.503.0",
     "react": "^19.1.0",
@@ -42,6 +41,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-decorators": "^7.25.9",
     "customize-cra": "^1.0.0",
     "react-app-rewired": "^2.2.1"
