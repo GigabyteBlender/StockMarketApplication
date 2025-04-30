@@ -70,35 +70,6 @@ This creates an optimized production build in the `build` folder.
 
 ## Troubleshooting Common Issues
 
-### "Module build failed: Support for the experimental syntax 'decorators' isn't currently enabled"
-
-If you encounter this error, install the necessary packages to support decorators:
-
-```bash
-npm install --save-dev customize-cra react-app-rewired @babel/plugin-proposal-decorators
-```
-
-Then create a `config-overrides.js` file in your project root:
-
-```javascript
-const { override, addDecoratorsLegacy } = require('customize-cra');
-
-module.exports = override(
-  addDecoratorsLegacy()
-);
-```
-
-Finally, update your `package.json` scripts:
-
-```json
-"scripts": {
-  "start": "react-app-rewired start",
-  "build": "react-app-rewired build",
-  "test": "react-app-rewired test",
-  "eject": "react-scripts eject"
-}
-```
-
 ### "Cannot find module 'lucide-react'"
 
 If you get this error, make sure you've installed the Lucide React package:
