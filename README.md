@@ -12,6 +12,29 @@ A modern, responsive stock market simulator built with React and Node.js that al
 - Transaction history and performance analysis
 - Responsive design for desktop and mobile
 
+## File Structure
+
+```
+stock-simulator/src/
+├── components/
+│   │   ├── Dashboard.jsx      # 
+│   │   ├── Portfolio.jsx      # 
+│   │   ├── Market.jsx         # 
+│   │   ├── History.jsx        # 
+│   │   ├── Header.jsx         # 
+│   │   ├── Sidebar.jsx        # 
+│   │   ├── TradeModal.jsx     # 
+│   │   └── StockSimulator.jsx # main component
+│   ├── services/
+│   │   └── stockService.js    # 
+│   ├── App.css
+│   ├── App.js                 # initilises the stock simulator
+│   ├── index.css
+│   ├── index.js
+│   ├── reportWebVital.js
+│   ├── setupTests.js
+```
+
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
