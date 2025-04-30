@@ -35,6 +35,17 @@ stock-simulator/src/
 │   ├── setupTests.js
 ```
 
+## Useful code snippets
+ 
+```jsx
+// Calculate portfolio metrics (include in StockSimulator.jsx)
+const portfolioValue = portfolio.reduce((total, stock) => total + (stock.shares * stock.currentPrice), 0);
+const totalCost = portfolio.reduce((total, stock) => total + (stock.shares * stock.avgPrice), 0);
+const totalGainLoss = portfolioValue - totalCost;
+const gainLossPercent = totalCost > 0 ? ((portfolioValue / totalCost - 1) * 100).toFixed(2) : 0;
+const availableCash = 10000; // Starting amount - would be tracked in a real app
+```
+
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
