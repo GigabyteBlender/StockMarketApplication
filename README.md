@@ -2,7 +2,7 @@
 
 A modern, responsive stock market simulator built with React and Node.js that allows users to practice trading stocks with virtual money.
 
-![Stock Simulator Screenshot](https://via.placeholder.com/800x450.png?text=Stock+Simulator+Screenshot)
+![Stock Simulator Screenshot](example.png)
 
 ## Features
 
