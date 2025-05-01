@@ -10,7 +10,7 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
         <div className="p-6">
             {/* Market summary */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="bg-gray-50 p-4 rounded-lg flex flex-col items-center">
                     <h3 className="text-sm text-gray-500 mb-1">S&P 500</h3>
                     <div className="flex items-center">
                         <span className="text-xl font-semibold mr-2">5,304.12</span>
@@ -20,7 +20,7 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
                         </span>
                     </div>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="bg-gray-50 p-4 rounded-lg flex flex-col items-center">
                     <h3 className="text-sm text-gray-500 mb-1">Dow Jones</h3>
                     <div className="flex items-center">
                         <span className="text-xl font-semibold mr-2">39,651.87</span>
@@ -30,7 +30,7 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
                         </span>
                     </div>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="bg-gray-50 p-4 rounded-lg flex flex-col items-center">
                     <h3 className="text-sm text-gray-500 mb-1">NASDAQ</h3>
                     <div className="flex items-center">
                         <span className="text-xl font-semibold mr-2">16,802.36</span>
@@ -41,8 +41,6 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
                     </div>
                 </div>
             </div>
-
-            {/* Top Gainers */}
             <div className="mb-6">
                 <h3 className="text-md font-medium mb-3">Top Gainers</h3>
                 <div className="overflow-x-auto">
