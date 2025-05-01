@@ -21,14 +21,14 @@ const DashboardTab = ({
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
 				<div className="bg-white rounded-xl shadow-sm p-6">
 					<h3 className="text-gray-500 text-sm font-medium mb-2">Portfolio Value</h3>
-					<div className="flex items-end space-x-2">
+					<div className="flex-col items-center space-x-2">
 						<span className="text-2xl font-bold">${portfolioValue.toFixed(2)}</span>
 					</div>
 				</div>
 
 				<div className="bg-white rounded-xl shadow-sm p-6">
 					<h3 className="text-gray-500 text-sm font-medium mb-2">Total Gain/Loss</h3>
-					<div className="flex items-end space-x-2">
+					<div className="flex-col items-center space-x-2">
 						<span className={`text-2xl font-bold ${totalGainLoss >= 0 ? 'text-green-600' : 'text-red-600'}`}>
 							{totalGainLoss >= 0 ? '+' : ''}${Math.abs(totalGainLoss).toFixed(2)}
 						</span>
@@ -40,7 +40,7 @@ const DashboardTab = ({
 
 				<div className="bg-white rounded-xl shadow-sm p-6">
 					<h3 className="text-gray-500 text-sm font-medium mb-2">Available Cash</h3>
-					<div className="flex items-end space-x-2">
+					<div className="flex-col items-center space-x-2">
 						<span className="text-2xl font-bold">${availableCash.toFixed(2)}</span>
 					</div>
 				</div>
@@ -96,14 +96,14 @@ const DashboardTab = ({
 					<table className="min-w-full divide-y divide-gray-200">
 						<thead className="bg-gray-50">
 							<tr>
-								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Symbol</th>
-								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Shares</th>
-								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg. Price</th>
-								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Current Price</th>
-								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Change</th>
-								<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Market Value</th>
-								<th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+								<th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Symbol</th>
+								<th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+								<th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Shares</th>
+								<th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Avg. Price</th>
+								<th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Current Price</th>
+								<th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Change</th>
+								<th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Market Value</th>
+								<th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
 							</tr>
 						</thead>
 						<tbody className="bg-white divide-y divide-gray-200">
@@ -167,11 +167,11 @@ const DashboardTab = ({
 						<table className="min-w-full">
 							<thead>
 								<tr>
-									<th className="pb-2 text-left text-xs font-medium text-gray-500 uppercase">Symbol</th>
-									<th className="pb-2 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-									<th className="pb-2 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
-									<th className="pb-2 text-left text-xs font-medium text-gray-500 uppercase">Change</th>
-									<th className="pb-2 text-right text-xs font-medium text-gray-500 uppercase">Action</th>
+									<th className="pb-2 text-center text-xs font-medium text-gray-500 uppercase">Symbol</th>
+									<th className="pb-2 text-center text-xs font-medium text-gray-500 uppercase">Name</th>
+									<th className="pb-2 text-center text-xs font-medium text-gray-500 uppercase">Price</th>
+									<th className="pb-2 text-center text-xs font-medium text-gray-500 uppercase">Change</th>
+									<th className="pb-2 text-center text-xs font-medium text-gray-500 uppercase">Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -220,11 +220,11 @@ const DashboardTab = ({
 						<table className="min-w-full">
 							<thead>
 								<tr>
-									<th className="pb-2 text-left text-xs font-medium text-gray-500 uppercase">Symbol</th>
-									<th className="pb-2 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-									<th className="pb-2 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
-									<th className="pb-2 text-left text-xs font-medium text-gray-500 uppercase">Change</th>
-									<th className="pb-2 text-right text-xs font-medium text-gray-500 uppercase">Action</th>
+									<th className="pb-2 text-center text-xs font-medium text-gray-500 uppercase">Symbol</th>
+									<th className="pb-2 text-center text-xs font-medium text-gray-500 uppercase">Name</th>
+									<th className="pb-2 text-center text-xs font-medium text-gray-500 uppercase">Price</th>
+									<th className="pb-2 text-center text-xs font-medium text-gray-500 uppercase">Change</th>
+									<th className="pb-2 text-center text-xs font-medium text-gray-500 uppercase">Action</th>
 								</tr>
 							</thead>
 							<tbody>
