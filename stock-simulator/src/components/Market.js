@@ -1,7 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { TrendingUp, TrendingDown } from 'lucide-react';
+import axios from 'axios';
 
 const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
+  const [marketIndices, setMarketIndices] = useState({
+    sp500: { price: 5304.12, change: 0.87 },
+    dowJones: { price: 39651.87, change: 0.56 },
+    nasdaq: { price: 16802.36, change: -0.22 }
+  });
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMarketIndices = async () => {
+      const API_KEY = process.env.REACT_APP_ALPHA_VANTAGE_API_KEY;
+      
+      try {
+        // Fetch data for market indices
+        const [sp500Response, dowResponse, nasdaqResponse] = await Promise.all([
+          axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=SPY&apikey=${API_KEY}`),
+          axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=DIA&apikey=${API_KEY}`),
+          axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=QQQ&apikey=${API_KEY}`)
+        ]);
+
+        // Parse responses
+        const sp500Data = sp500Response.data['Global Quote'];
+        const dowData = dowResponse.data['Global Quote'];
+        const nasdaqData = nasdaqResponse.data['Global Quote'];
+
+        if (sp500Data && dowData && nasdaqData) {
+          setMarketIndices({
+            sp500: { 
+              price: parseFloat(sp500Data['05. price']),
+              change: parseFloat(sp500Data['10. change percent'].replace('%', ''))
+            },
+            dowJones: { 
+              price: parseFloat(dowData['05. price']),
+              change: parseFloat(dowData['10. change percent'].replace('%', ''))
+            },
+            nasdaq: { 
+              price: parseFloat(nasdaqData['05. price']),
+              change: parseFloat(nasdaqData['10. change percent'].replace('%', ''))
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching market indices:', error);
+        // Keep the default values in case of API failures
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMarketIndices();
+  }, []);
+
   return (
     <div className="bg-white rounded-xl shadow-sm">
         <div className="p-6 border-b">
@@ -13,31 +66,58 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
                 <div className="bg-gray-50 p-4 rounded-lg flex flex-col items-center">
                     <h3 className="text-sm text-gray-500 mb-1">S&P 500</h3>
                     <div className="flex items-center">
-                        <span className="text-xl font-semibold mr-2">5,304.12</span>
-                        <span className="text-green-600 flex items-center text-sm">
-                            <TrendingUp className="h-4 w-4 mr-1" />
-                            +0.87%
-                        </span>
+                        {loading ? (
+                          <span className="text-gray-400">Loading...</span>
+                        ) : (
+                          <>
+                            <span className="text-xl font-semibold mr-2">{marketIndices.sp500.price.toFixed(2)}</span>
+                            <span className={`${marketIndices.sp500.change >= 0 ? 'text-green-600' : 'text-red-600'} flex items-center text-sm`}>
+                                {marketIndices.sp500.change >= 0 ? 
+                                  <TrendingUp className="h-4 w-4 mr-1" /> : 
+                                  <TrendingDown className="h-4 w-4 mr-1" />
+                                }
+                                {marketIndices.sp500.change >= 0 ? '+' : ''}{marketIndices.sp500.change.toFixed(2)}%
+                            </span>
+                          </>
+                        )}
                     </div>
                 </div>
                 <div className="bg-gray-50 p-4 rounded-lg flex flex-col items-center">
                     <h3 className="text-sm text-gray-500 mb-1">Dow Jones</h3>
                     <div className="flex items-center">
-                        <span className="text-xl font-semibold mr-2">39,651.87</span>
-                        <span className="text-green-600 flex items-center text-sm">
-                            <TrendingUp className="h-4 w-4 mr-1" />
-                            +0.56%
-                        </span>
+                        {loading ? (
+                          <span className="text-gray-400">Loading...</span>
+                        ) : (
+                          <>
+                            <span className="text-xl font-semibold mr-2">{marketIndices.dowJones.price.toFixed(2)}</span>
+                            <span className={`${marketIndices.dowJones.change >= 0 ? 'text-green-600' : 'text-red-600'} flex items-center text-sm`}>
+                                {marketIndices.dowJones.change >= 0 ? 
+                                  <TrendingUp className="h-4 w-4 mr-1" /> : 
+                                  <TrendingDown className="h-4 w-4 mr-1" />
+                                }
+                                {marketIndices.dowJones.change >= 0 ? '+' : ''}{marketIndices.dowJones.change.toFixed(2)}%
+                            </span>
+                          </>
+                        )}
                     </div>
                 </div>
                 <div className="bg-gray-50 p-4 rounded-lg flex flex-col items-center">
                     <h3 className="text-sm text-gray-500 mb-1">NASDAQ</h3>
                     <div className="flex items-center">
-                        <span className="text-xl font-semibold mr-2">16,802.36</span>
-                        <span className="text-red-600 flex items-center text-sm">
-                            <TrendingDown className="h-4 w-4 mr-1" />
-                            -0.22%
-                        </span>
+                        {loading ? (
+                          <span className="text-gray-400">Loading...</span>
+                        ) : (
+                          <>
+                            <span className="text-xl font-semibold mr-2">{marketIndices.nasdaq.price.toFixed(2)}</span>
+                            <span className={`${marketIndices.nasdaq.change >= 0 ? 'text-green-600' : 'text-red-600'} flex items-center text-sm`}>
+                                {marketIndices.nasdaq.change >= 0 ? 
+                                  <TrendingUp className="h-4 w-4 mr-1" /> : 
+                                  <TrendingDown className="h-4 w-4 mr-1" />
+                                }
+                                {marketIndices.nasdaq.change >= 0 ? '+' : ''}{marketIndices.nasdaq.change.toFixed(2)}%
+                            </span>
+                          </>
+                        )}
                     </div>
                 </div>
             </div>
@@ -57,9 +137,16 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
-                            {marketMovers
-                                .filter(stock => stock.change > 0)
-                                .sort((a, b) => b.change - a.change)
+                            {loading ? (
+                              <tr>
+                                <td colSpan="5" className="px-6 py-4 text-center text-gray-500">
+                                  Loading market data...
+                                </td>
+                              </tr>
+                            ) : (
+                              marketMovers
+                                .filter(stock => stock.changePercent > 0)
+                                .sort((a, b) => b.changePercent - a.changePercent)
                                 .slice(0, 5)
                                 .map((stock) => (
                                     <tr key={stock.symbol}>
@@ -69,7 +156,7 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
                                         <td className="px-6 py-4 whitespace-nowrap text-green-600">
                                             <div className="flex items-center">
                                                 <TrendingUp className="h-4 w-4 mr-1" />
-                                                +{stock.change}%
+                                                +{stock.changePercent.toFixed(2)}%
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right">
@@ -89,7 +176,8 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
                                             </div>
                                         </td>
                                     </tr>
-                                ))}
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -110,9 +198,16 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
-                            {marketMovers
-                                .filter(stock => stock.change < 0)
-                                .sort((a, b) => a.change - b.change)
+                            {loading ? (
+                              <tr>
+                                <td colSpan="5" className="px-6 py-4 text-center text-gray-500">
+                                  Loading market data...
+                                </td>
+                              </tr>
+                            ) : (
+                              marketMovers
+                                .filter(stock => stock.changePercent < 0)
+                                .sort((a, b) => a.changePercent - b.changePercent)
                                 .slice(0, 5)
                                 .map((stock) => (
                                     <tr key={stock.symbol}>
@@ -122,7 +217,7 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
                                         <td className="px-6 py-4 whitespace-nowrap text-red-600">
                                             <div className="flex items-center">
                                                 <TrendingDown className="h-4 w-4 mr-1" />
-                                                {stock.change}%
+                                                {stock.changePercent.toFixed(2)}%
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right">
@@ -142,13 +237,14 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
                                             </div>
                                         </td>
                                     </tr>
-                                ))}
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-)}
+)};
 
 export default MarketTab;
