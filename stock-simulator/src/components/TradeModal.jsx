@@ -1,5 +1,6 @@
 import React from 'react';
 import { X } from 'lucide-react';
+import './styles/TradeModal.css';
 
 export default function TradeModal({ 
   isOpen, 
@@ -14,46 +15,62 @@ export default function TradeModal({
 }) {
   if (!isOpen || !selectedStock) return null;
 
+  // Check if trade is valid
+  const isInsufficientFunds = tradeAction === 'BUY' && tradeQuantity * (selectedStock.price || 0) > availableCash;
+  const availableShares = portfolio.find(stock => stock.symbol === selectedStock.symbol)?.shares || 0;
+  const isInsufficientShares = tradeAction === 'SELL' && availableShares < tradeQuantity;
+  const isDisabled = isInsufficientFunds || isInsufficientShares;
+  
+  // Calculate estimated total
+  const estimatedTotal = tradeQuantity * (selectedStock.price || 0);
+
+  // Determine button class based on trade action and validity
+  const getConfirmButtonClass = () => {
+    const baseClass = 'confirm-button';
+    
+    if (tradeAction === 'BUY') {
+      return `${baseClass} buy ${isInsufficientFunds ? 'disabled' : ''}`;
+    } else {
+      return `${baseClass} sell ${isInsufficientShares ? 'disabled' : ''}`;
+    }
+  };
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl shadow-xl max-w-md w-full">
-        <div className="p-6 border-b flex justify-between items-center">
-          <h2 className="text-lg font-semibold">
+    <div className="modal-overlay">
+      <div className="modal-container">
+        <div className="modal-header">
+          <h2 className="modal-title">
             {tradeAction === 'BUY' ? 'Buy' : 'Sell'} {selectedStock.symbol}
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
+            className="close-button"
           >
             <X size={20} />
           </button>
         </div>
-        <div className="p-6">
-          <div className="flex justify-between items-center mb-6">
-            <div className="text-center w-1/3">
-              <p className="text-sm text-gray-500 mb-1">Current Price</p>
-              <p className="text-lg font-semibold">${selectedStock.price?.toFixed(2) || '0.00'}</p>
+        <div className="modal-content">
+          <div className="trade-info">
+            <div className="info-item">
+              <p className="info-label">Current Price</p>
+              <p className="info-value">${selectedStock.price?.toFixed(2) || '0.00'}</p>
             </div>
-            <div className="text-center w-1/3">
-              <p className="text-sm text-gray-500 mb-1">Available Cash</p>
-              <p className="text-lg font-semibold">${availableCash.toFixed(2)}</p>
+            <div className="info-item">
+              <p className="info-label">Available Cash</p>
+              <p className="info-value">${availableCash.toFixed(2)}</p>
             </div>
-            <div className="text-center w-1/3">
-              <p className="text-sm text-gray-500 mb-1">Available Shares</p>
-              <p className="text-lg font-semibold">
-                {
-                  portfolio.find(stock => stock.symbol === selectedStock.symbol)?.shares || 0
-                }
-              </p>
+            <div className="info-item">
+              <p className="info-label">Available Shares</p>
+              <p className="info-value">{availableShares}</p>
             </div>
           </div>
 
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
-            <div className="flex items-center">
+          <div className="quantity-section">
+            <label className="quantity-label">Quantity</label>
+            <div className="quantity-controls">
               <button
                 onClick={() => updateTradeQuantity(-1)}
-                className="border border-r-0 rounded-l-lg px-4 py-2 text-gray-600 hover:bg-gray-100"
+                className="quantity-button decrease"
               >
                 -
               </button>
@@ -61,53 +78,35 @@ export default function TradeModal({
                 type="number"
                 value={tradeQuantity}
                 onChange={(e) => updateTradeQuantity(Math.max(1, parseInt(e.target.value) || 1) - tradeQuantity)}
-                className="border text-center py-2 px-4 w-20"
+                className="quantity-input"
                 min="1"
               />
               <button
                 onClick={() => updateTradeQuantity(1)}
-                className="border border-l-0 rounded-r-lg px-4 py-2 text-gray-600 hover:bg-gray-100"
+                className="quantity-button increase"
               >
                 +
               </button>
             </div>
           </div>
 
-          <div className="mb-6">
-            <div className="flex justify-between items-center mb-1">
-              <p className="text-sm text-gray-500">Estimated Total</p>
-              <p className="text-lg font-semibold">${(tradeQuantity * (selectedStock.price || 0)).toFixed(2)}</p>
+          <div className="total-section">
+            <div className="total-info">
+              <p className="total-label">Estimated Total</p>
+              <p className="total-value">${estimatedTotal.toFixed(2)}</p>
             </div>
-            {tradeAction === 'BUY' && (
-              <div className="text-sm text-gray-500">
-                {tradeQuantity * (selectedStock.price || 0) > availableCash && (
-                  <p className="text-red-600">Insufficient funds</p>
-                )}
-              </div>
+            {isInsufficientFunds && (
+              <p className="error-message">Insufficient funds</p>
             )}
-            {tradeAction === 'SELL' && (
-              <div className="text-sm text-gray-500">
-                {(portfolio.find(stock => stock.symbol === selectedStock.symbol)?.shares || 0) < tradeQuantity && (
-                  <p className="text-red-600">Insufficient shares</p>
-                )}
-              </div>
+            {isInsufficientShares && (
+              <p className="error-message">Insufficient shares</p>
             )}
           </div>
 
           <button
             onClick={confirmTrade}
-            disabled={
-              (tradeAction === 'BUY' && tradeQuantity * (selectedStock.price || 0) > availableCash) ||
-              (tradeAction === 'SELL' && (portfolio.find(stock => stock.symbol === selectedStock.symbol)?.shares || 0) < tradeQuantity)
-            }
-            className={`w-full py-3 rounded-lg text-white font-medium ${tradeAction === 'BUY'
-              ? (tradeQuantity * (selectedStock.price || 0) > availableCash
-                ? 'bg-green-300 cursor-not-allowed'
-                : 'bg-green-600 hover:bg-green-700')
-              : ((portfolio.find(stock => stock.symbol === selectedStock.symbol)?.shares || 0) < tradeQuantity
-                ? 'bg-red-300 cursor-not-allowed'
-                : 'bg-red-600 hover:bg-red-700')
-              }`}
+            disabled={isDisabled}
+            className={getConfirmButtonClass()}
           >
             Confirm {tradeAction === 'BUY' ? 'Purchase' : 'Sale'}
           </button>

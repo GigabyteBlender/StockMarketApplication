@@ -17,22 +17,21 @@ A modern, responsive stock market simulator built with React and Node.js that al
 ```
 stock-simulator/src/
 ├── components/
-│   │   ├── Dashboard.jsx      # 
-│   │   ├── Portfolio.jsx      # 
-│   │   ├── Market.jsx         # 
-│   │   ├── History.jsx        # 
-│   │   ├── Header.jsx         # 
-│   │   ├── Sidebar.jsx        # 
-│   │   ├── TradeModal.jsx     # 
+│   │   ├── styles/           # styles for components
+│   │   ├── Dashboard.jsx      
+│   │   ├── Portfolio.jsx      
+│   │   ├── Market.jsx         
+│   │   ├── History.jsx        
+│   │   ├── Header.jsx         
+│   │   ├── Sidebar.jsx        
+│   │   ├── TradeModal.jsx     
 │   │   └── StockSimulator.jsx # main component
 │   ├── services/
-│   │   └── stockService.js    # 
+│   │   └── stockService.js     
 │   ├── App.css
 │   ├── App.js                 # initilises the stock simulator
-│   ├── index.css
 │   ├── index.js
 │   ├── reportWebVital.js
-│   ├── setupTests.js
 ```
 
 ## Useful code snippets
@@ -71,7 +70,6 @@ This will install all required dependencies including:
 - React
 - React DOM
 - Lucide React (for icons)
-- Tailwind CSS
 - Axios (for API requests)
 
 ### Step 3: Configure environment variables

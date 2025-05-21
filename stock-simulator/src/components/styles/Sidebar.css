@@ -1,0 +1,126 @@
+
+.sidebar {
+  width: 280px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem 1rem;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  transition: all 0.3s ease;
+}
+
+.sidebar-logo {
+  margin-bottom: 2rem;
+  padding: 0 0.75rem;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  border-radius: 0.625rem;
+  transition: all 0.2s ease;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.sidebar-button:hover {
+  background-color: #f9fafb;
+  transform: translateX(2px);
+}
+
+.sidebar-button.active {
+  background-color: #eef2ff;
+  color: #4f46e5;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(79, 70, 229, 0.1);
+}
+
+.sidebar-button-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  opacity: 0.8;
+}
+
+.sidebar-button-text {
+  margin-left: 0.875rem;
+  font-size: 0.9375rem;
+}
+
+.sidebar-divider {
+  height: 1px;
+  width: 100%;
+  background-color: #e5e7eb;
+  margin: 1.25rem 0;
+  opacity: 0.6;
+}
+
+.sidebar-user {
+  margin-top: auto;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.625rem;
+  background-color: #f9fafb;
+}
+
+.sidebar-user-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: #e0e7ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+.sidebar-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-user-name {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: #1f2937;
+}
+
+.sidebar-user-role {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 240px;
+    padding: 1.25rem 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 50;
+    transform: translateX(-100%);
+  }
+  
+  .sidebar.show {
+    transform: translateX(0);
+  }
+}

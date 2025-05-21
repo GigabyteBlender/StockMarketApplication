@@ -1,0 +1,165 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal-container {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  max-width: 28rem;
+  width: 100%;
+}
+
+.modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.close-button {
+  color: #6b7280;
+}
+
+.close-button:hover {
+  color: #374151;
+}
+
+.modal-content {
+  padding: 1.5rem;
+}
+
+.trade-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.info-item {
+  text-align: center;
+  width: 33.333333%;
+}
+
+.info-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+}
+
+.info-value {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.quantity-section {
+  margin-bottom: 1.5rem;
+}
+
+.quantity-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-button {
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem 1rem;
+  color: #4b5563;
+}
+
+.quantity-button:hover {
+  background-color: #f3f4f6;
+}
+
+.quantity-button.decrease {
+  border-radius: 0.5rem 0 0 0.5rem;
+  border-right: none;
+}
+
+.quantity-button.increase {
+  border-radius: 0 0.5rem 0.5rem 0;
+  border-left: none;
+}
+
+.quantity-input {
+  border: 1px solid #e5e7eb;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  width: 5rem;
+}
+
+.total-section {
+  margin-bottom: 1.5rem;
+}
+
+.total-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.total-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.total-value {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.error-message {
+  font-size: 0.875rem;
+  color: #dc2626;
+}
+
+.confirm-button {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: 500;
+}
+
+.confirm-button.buy {
+  background-color: #16a34a;
+}
+
+.confirm-button.buy:hover:not(.disabled) {
+  background-color: #15803d;
+}
+
+.confirm-button.sell {
+  background-color: #dc2626;
+}
+
+.confirm-button.sell:hover:not(.disabled) {
+  background-color: #b91c1c;
+}
+
+.confirm-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}

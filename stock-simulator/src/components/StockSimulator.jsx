@@ -18,6 +18,8 @@ import Market from './Market';
 import History from './History';
 import TradeModal from './TradeModal';
 
+import './styles/StockSimulator.css';
+
 export default function StockSimulator() {
 	const [activeTab, setActiveTab] = useState('dashboard');
 	const [searchTerm, setSearchTerm] = useState('');
@@ -188,17 +190,17 @@ export default function StockSimulator() {
 	};
 
 	return (
-		<div className="flex flex-col h-screen bg-gray-100 text-gray-800">
+		<div className="simulator-container">
 			{/* Header */}
 			<Header {...headerProps} />
 
 			{/* Main content */}
-			<div className="flex flex-1 overflow-hidden">
+			<div className="simulator-content">
 				{/* Sidebar */}
 				<Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
 				{/* Main content area */}
-				<main className="flex-1 p-6 overflow-auto">
+				<main className="main-content">
 					{activeTab === 'dashboard' && <Dashboard {...dashboardProps} />}
 					{activeTab === 'portfolio' && <Portfolio {...portfolioProps} />}
 					{activeTab === 'market' && <Market {...marketProps} />}

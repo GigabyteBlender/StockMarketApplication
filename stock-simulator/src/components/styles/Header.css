@@ -1,0 +1,156 @@
+.header {
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  padding: 1.25rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-icon {
+  color: #3b82f6;
+  transition: color 0.2s ease;
+}
+
+.logo-container:hover .logo-icon {
+  color: #2563eb;
+}
+
+.app-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.025em;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.search-container {
+  display: flex;
+  position: relative;
+}
+
+.search-input {
+  padding: 0.65rem 1rem 0.65rem 2.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  width: 18rem;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  background-color: #f9fafb;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  background-color: white;
+  border-color: #93c5fd;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 1.25rem;
+  width: 1.25rem;
+  color: #6b7280;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.search-container:focus-within .search-icon {
+  color: #3b82f6;
+}
+
+.search-results {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  margin-top: 0.25rem;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.search-result-item {
+  padding: 0.75rem 1.25rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.15s ease;
+}
+
+.search-result-item:not(:last-child) {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.search-result-item:hover {
+  background-color: #f9fafb;
+}
+
+.stock-symbol {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.stock-price {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.stock-trend {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.stock-trend.positive {
+  color: #10b981;
+}
+
+.stock-trend.negative {
+  color: #ef4444;
+}
+
+.trend-icon {
+  height: 1rem;
+  width: 1rem;
+  margin-right: 0.25rem;
+}
+
+.balance-display {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  font-weight: 600;
+  padding: 0.65rem 1.25rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.balance-display:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(16, 185, 129, 0.25);
+}
