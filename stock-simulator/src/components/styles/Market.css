@@ -12,7 +12,7 @@
 }
 
 .market-header {
-  padding: 1.75rem 2rem;
+  padding: 0.5rem 2rem;
   border-bottom: 1px solid rgba(229, 231, 235, 0.7);
   display: flex;
   justify-content: space-between;
@@ -44,13 +44,14 @@
   border-radius: 0.5rem;
   background-color: #f9fafb;
   color: #4b5563;
+  border: none;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .market-refresh-button:hover {
   background-color: #f3f4f6;
   color: #1f2937;
-  transform: rotate(30deg);
 }
 
 .market-body {

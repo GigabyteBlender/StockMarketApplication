@@ -71,7 +71,7 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
             </h2>
             <div className="market-header-actions">
                 <button className="market-refresh-button" onClick={handleRefresh}>
-                    <RotateCcw className="h-4 w-4" />
+                    <RotateCcw size={16} />
                 </button>
             </div>
         </div>
