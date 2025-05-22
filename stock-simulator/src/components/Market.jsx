@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TrendingUp, TrendingDown, BarChart2, RefreshCw } from 'lucide-react';
+import { TrendingUp, TrendingDown, BarChart2, RotateCcw} from 'lucide-react';
 import axios from 'axios';
 import './styles/Market.css';
 
@@ -71,7 +71,7 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
             </h2>
             <div className="market-header-actions">
                 <button className="market-refresh-button" onClick={handleRefresh}>
-                    <RefreshCw className="h-4 w-4" />
+                    <RotateCcw className="h-4 w-4" />
                 </button>
             </div>
         </div>
@@ -163,10 +163,10 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
                                 <th className="market-table-header-cell">Name</th>
                                 <th className="market-table-header-cell">Price</th>
                                 <th className="market-table-header-cell">Change</th>
-                                <th className="market-table-header-cell">Action</th>
+                                <th className="market-table-header-cell">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="market-table-body">
                             {loading ? (
                               <tr>
                                 <td colSpan="5" className="loading-message">
@@ -181,17 +181,27 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
                                 .slice(0, 5)
                                 .map((stock) => (
                                     <tr key={stock.symbol} className="market-table-row">
-                                        <td className="market-table-cell market-table-cell-symbol">{stock.symbol}</td>
-                                        <td className="market-table-cell">{stock.name}</td>
-                                        <td className="market-table-cell">${stock.price.toFixed(2)}</td>
                                         <td className="market-table-cell">
-                                            <div className="trend-up">
-                                                <TrendingUp className="h-4 w-4 mr-1" />
-                                                +{stock.changePercent.toFixed(2)}%
+                                            <div className="symbol-cell">
+                                                <div className="symbol-icon">{stock.symbol.charAt(0)}</div>
+                                                <div className="symbol-text">
+                                                    {stock.symbol}
+                                                    <span className="symbol-name">{stock.name}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="market-table-cell">{stock.name}</td>
+                                        <td className="market-table-cell price-cell">${stock.price.toFixed(2)}</td>
+                                        <td className="market-table-cell">
+                                            <div className="gain-loss-values">
+                                                <div className="trend-up">
+                                                    <TrendingUp className="h-4 w-4" />
+                                                    +{stock.changePercent.toFixed(2)}%
+                                                </div>
                                             </div>
                                         </td>
                                         <td className="market-table-cell">
-                                            <div className="flex justify-center space-x-2">
+                                            <div style={{ display: 'flex', gap: '0.5rem' }}>
                                                 <button
                                                     className="btn-trade"
                                                     onClick={() => openTradeModal(stock.symbol, 'BUY')}
@@ -231,10 +241,10 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
                                 <th className="market-table-header-cell">Name</th>
                                 <th className="market-table-header-cell">Price</th>
                                 <th className="market-table-header-cell">Change</th>
-                                <th className="market-table-header-cell">Action</th>
+                                <th className="market-table-header-cell">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="market-table-body">
                             {loading ? (
                               <tr>
                                 <td colSpan="5" className="loading-message">
@@ -249,17 +259,27 @@ const MarketTab = ({ marketMovers, openTradeModal, handleSelectStock }) => {
                                 .slice(0, 5)
                                 .map((stock) => (
                                     <tr key={stock.symbol} className="market-table-row">
-                                        <td className="market-table-cell market-table-cell-symbol">{stock.symbol}</td>
-                                        <td className="market-table-cell">{stock.name}</td>
-                                        <td className="market-table-cell">${stock.price.toFixed(2)}</td>
                                         <td className="market-table-cell">
-                                            <div className="trend-down">
-                                                <TrendingDown className="h-4 w-4 mr-1" />
-                                                {stock.changePercent.toFixed(2)}%
+                                            <div className="symbol-cell">
+                                                <div className="symbol-icon">{stock.symbol.charAt(0)}</div>
+                                                <div className="symbol-text">
+                                                    {stock.symbol}
+                                                    <span className="symbol-name">{stock.name}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="market-table-cell">{stock.name}</td>
+                                        <td className="market-table-cell price-cell">${stock.price.toFixed(2)}</td>
+                                        <td className="market-table-cell">
+                                            <div className="gain-loss-values">
+                                                <div className="trend-down">
+                                                    <TrendingDown className="h-4 w-4" />
+                                                    {stock.changePercent.toFixed(2)}%
+                                                </div>
                                             </div>
                                         </td>
                                         <td className="market-table-cell">
-                                            <div className="flex justify-center space-x-2">
+                                            <div style={{ display: 'flex', gap: '0.5rem' }}>
                                                 <button
                                                     className="btn-trade"
                                                     onClick={() => openTradeModal(stock.symbol, 'BUY')}

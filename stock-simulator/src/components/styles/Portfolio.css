@@ -202,8 +202,9 @@
   gap: 0.75rem;
 }
 .symbol-icon {
-  width: 2rem;
-  height: 2rem;
+  position: relative;
+  min-width: 35px;
+  min-height: 35px;
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
@@ -215,6 +216,7 @@
 }
 .symbol-text {
   display: flex;
+  margin: auto;
   flex-direction: column;
 }
 .symbol-name {
@@ -267,6 +269,12 @@
 .buy-button {
   background-color: #ecfdf5;
   color: #047857;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
 }
 .buy-button:hover {
   background-color: #d1fae5;
@@ -275,6 +283,12 @@
 .sell-button {
   background-color: #fef2f2;
   color: #b91c1c;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
 }
 .sell-button:hover {
   background-color: #fee2e2;
