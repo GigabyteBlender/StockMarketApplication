@@ -1,5 +1,5 @@
 import React from 'react';
-import { X } from 'lucide-react';
+import { X, TrendingUp, TrendingDown, AlertCircle, CheckCircle, Minus, Plus } from 'lucide-react';
 import './styles/TradeModal.css';
 
 export default function TradeModal({ 
@@ -15,101 +15,136 @@ export default function TradeModal({
 }) {
   if (!isOpen || !selectedStock) return null;
 
-  // Check if trade is valid
-  const isInsufficientFunds = tradeAction === 'BUY' && tradeQuantity * (selectedStock.price || 0) > availableCash;
   const availableShares = portfolio.find(stock => stock.symbol === selectedStock.symbol)?.shares || 0;
-  const isInsufficientShares = tradeAction === 'SELL' && availableShares < tradeQuantity;
-  const isDisabled = isInsufficientFunds || isInsufficientShares;
+  const stockPrice = selectedStock.price || 0;
+  const estimatedTotal = tradeQuantity * stockPrice;
   
-  // Calculate estimated total
-  const estimatedTotal = tradeQuantity * (selectedStock.price || 0);
+  const isInsufficientFunds = tradeAction === 'BUY' && estimatedTotal > availableCash;
+  const isInsufficientShares = tradeAction === 'SELL' && availableShares < tradeQuantity;
+  const isDisabled = isInsufficientFunds || isInsufficientShares || tradeQuantity <= 0;
 
-  // Determine button class based on trade action and validity
-  const getConfirmButtonClass = () => {
-    const baseClass = 'confirm-button';
-    
-    if (tradeAction === 'BUY') {
-      return `${baseClass} buy ${isInsufficientFunds ? 'disabled' : ''}`;
-    } else {
-      return `${baseClass} sell ${isInsufficientShares ? 'disabled' : ''}`;
-    }
+  const maxBuyQuantity = Math.floor(availableCash / stockPrice);
+  const maxSellQuantity = availableShares;
+
+  const handleMaxQuantity = () => {
+    const maxQty = tradeAction === 'BUY' ? maxBuyQuantity : maxSellQuantity;
+    updateTradeQuantity(maxQty - tradeQuantity);
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-container">
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-backdrop"></div>
+        
         <div className="modal-header">
-          <h2 className="modal-title">
-            {tradeAction === 'BUY' ? 'Buy' : 'Sell'} {selectedStock.symbol}
-          </h2>
-          <button
-            onClick={onClose}
-            className="close-button"
-          >
+          <div className="modal-title-section">
+            <div className={`trade-type-badge ${tradeAction.toLowerCase()}`}>
+              {tradeAction === 'BUY' ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
+              <span>{tradeAction}</span>
+            </div>
+            <h2 className="modal-title">{selectedStock.symbol}</h2>
+          </div>
+          <button onClick={onClose} className="close-button">
             <X size={20} />
           </button>
         </div>
+
         <div className="modal-content">
-          <div className="trade-info">
-            <div className="info-item">
-              <p className="info-label">Current Price</p>
-              <p className="info-value">${selectedStock.price?.toFixed(2) || '0.00'}</p>
+          <div className="stock-info-grid">
+            <div className="info-card">
+              <div className="info-label">Current Price</div>
+              <div className="info-value price">${stockPrice.toFixed(2)}</div>
             </div>
-            <div className="info-item">
-              <p className="info-label">Available Cash</p>
-              <p className="info-value">${availableCash.toFixed(2)}</p>
+            <div className="info-card">
+              <div className="info-label">Available Cash</div>
+              <div className="info-value cash">${availableCash.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
             </div>
-            <div className="info-item">
-              <p className="info-label">Available Shares</p>
-              <p className="info-value">{availableShares}</p>
+            <div className="info-card">
+              <div className="info-label">Owned Shares</div>
+              <div className="info-value shares">{availableShares.toLocaleString()}</div>
             </div>
           </div>
 
           <div className="quantity-section">
-            <label className="quantity-label">Quantity</label>
-            <div className="quantity-controls">
-              <button
-                onClick={() => updateTradeQuantity(-1)}
-                className="quantity-button decrease"
-              >
-                -
+            <div className="quantity-header">
+              <label className="quantity-label">Quantity</label>
+              <button className="max-button" onClick={handleMaxQuantity}>
+                Max: {tradeAction === 'BUY' ? maxBuyQuantity : maxSellQuantity}
               </button>
+            </div>
+            
+            <div className="quantity-input-wrapper">
+              <button
+                type="button"
+                onClick={() => updateTradeQuantity(-1)}
+                className="quantity-btn decrease"
+                disabled={tradeQuantity <= 1}
+              >
+                <Minus size={16} />
+              </button>
+              
               <input
                 type="number"
                 value={tradeQuantity}
-                onChange={(e) => updateTradeQuantity(Math.max(1, parseInt(e.target.value) || 1) - tradeQuantity)}
+                onChange={(e) => {
+                  const value = Math.max(1, parseInt(e.target.value) || 1);
+                  updateTradeQuantity(value - tradeQuantity);
+                }}
                 className="quantity-input"
                 min="1"
               />
+              
               <button
+                type="button"
                 onClick={() => updateTradeQuantity(1)}
-                className="quantity-button increase"
+                className="quantity-btn increase"
               >
-                +
+                <Plus size={16} />
               </button>
             </div>
           </div>
 
-          <div className="total-section">
-            <div className="total-info">
-              <p className="total-label">Estimated Total</p>
-              <p className="total-value">${estimatedTotal.toFixed(2)}</p>
+          <div className="order-summary">
+            <div className="summary-row">
+              <span>Order Value</span>
+              <span className="summary-value">${estimatedTotal.toFixed(2)}</span>
             </div>
-            {isInsufficientFunds && (
-              <p className="error-message">Insufficient funds</p>
-            )}
-            {isInsufficientShares && (
-              <p className="error-message">Insufficient shares</p>
-            )}
+            <div className="summary-row">
+              <span>Estimated Fee</span>
+              <span className="summary-value">$0.00</span>
+            </div>
+            <div className="summary-divider"></div>
+            <div className="summary-row total">
+              <span>Total {tradeAction === 'BUY' ? 'Cost' : 'Proceeds'}</span>
+              <span className="summary-value total-value">${estimatedTotal.toFixed(2)}</span>
+            </div>
           </div>
 
-          <button
-            onClick={confirmTrade}
-            disabled={isDisabled}
-            className={getConfirmButtonClass()}
-          >
-            Confirm {tradeAction === 'BUY' ? 'Purchase' : 'Sale'}
-          </button>
+          {(isInsufficientFunds || isInsufficientShares) && (
+            <div className="error-alert">
+              <AlertCircle size={16} />
+              <span>
+                {isInsufficientFunds && 'Insufficient funds for this purchase'}
+                {isInsufficientShares && 'Insufficient shares for this sale'}
+              </span>
+            </div>
+          )}
+
+          <div className="modal-actions">
+            <button onClick={onClose} className="cancel-button">
+              Cancel
+            </button>
+            <button
+              onClick={confirmTrade}
+              disabled={isDisabled}
+              className={`confirm-button ${tradeAction.toLowerCase()} ${isDisabled ? 'disabled' : ''}`}
+            >
+              {!isDisabled && <CheckCircle size={16} />}
+              <span>
+                {tradeAction === 'BUY' ? 'Buy' : 'Sell'} {tradeQuantity} Share{tradeQuantity !== 1 ? 's' : ''}
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

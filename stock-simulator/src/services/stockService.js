@@ -1,26 +1,36 @@
-// src/services/stockService.js
 import axios from 'axios';
 
 // Get API key from environment variables
-const API_KEY = process.env.REACT_APP_ALPHA_VANTAGE_API_KEY;
+const API_KEY = process.env.REACT_APP_FINNHUB_API_KEY;
+const BASE_URL = 'https://finnhub.io/api/v1';
 
 // Fetch current stock price for a symbol
 export const fetchStockPrice = async (symbol) => {
   try {
-    const response = await axios.get(
-      `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}`
+    // Get current quote
+    const quoteResponse = await axios.get(
+      `${BASE_URL}/quote?symbol=${symbol}&token=${API_KEY}`
     );
     
-    // Parse the response to return just what we need
-    const data = response.data['Global Quote'];
-    if (data) {
+    // Get company profile for name
+    const profileResponse = await axios.get(
+      `${BASE_URL}/stock/profile2?symbol=${symbol}&token=${API_KEY}`
+    );
+    
+    const quote = quoteResponse.data;
+    const profile = profileResponse.data;
+    
+    if (quote && quote.c !== null) {
+      const change = quote.c - quote.pc; // current - previous close
+      const changePercent = quote.pc > 0 ? ((change / quote.pc) * 100) : 0;
+      
       return {
-        symbol: data['01. symbol'],
-        name: await fetchCompanyName(symbol), // Fetch the company name
-        price: parseFloat(data['05. price']),
-        change: parseFloat(data['09. change']),
-        changePercent: parseFloat(data['10. change percent'].replace('%', '')),
-        latestTradingDay: data['07. latest trading day'],
+        symbol: symbol,
+        name: profile.name || symbol,
+        price: parseFloat(quote.c.toFixed(2)), // current price
+        change: parseFloat(change.toFixed(2)),
+        changePercent: parseFloat(changePercent.toFixed(2)),
+        latestTradingDay: new Date().toISOString().split('T')[0], // Use current date as trading day
       };
     }
     throw new Error('No data returned from API');
@@ -34,10 +44,10 @@ export const fetchStockPrice = async (symbol) => {
 export const fetchCompanyName = async (symbol) => {
   try {
     const response = await axios.get(
-      `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}`
+      `${BASE_URL}/stock/profile2?symbol=${symbol}&token=${API_KEY}`
     );
     
-    return response.data.Name || symbol;
+    return response.data.name || symbol;
   } catch (error) {
     console.error('Error fetching company name:', error);
     return symbol; // Return the symbol as fallback
@@ -48,10 +58,24 @@ export const fetchCompanyName = async (symbol) => {
 export const fetchCompanyInfo = async (symbol) => {
   try {
     const response = await axios.get(
-      `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}`
+      `${BASE_URL}/stock/profile2?symbol=${symbol}&token=${API_KEY}`
     );
     
-    return response.data;
+    // Map Finnhub response to match Alpha Vantage structure
+    const data = response.data;
+    return {
+      Name: data.name,
+      Symbol: symbol,
+      Description: data.description || '',
+      Industry: data.finnhubIndustry || '',
+      Sector: data.gics || '',
+      MarketCapitalization: data.marketCapitalization || 0,
+      Country: data.country || '',
+      Currency: data.currency || 'USD',
+      Exchange: data.exchange || '',
+      WebURL: data.weburl || '',
+      Logo: data.logo || '',
+    };
   } catch (error) {
     console.error('Error fetching company info:', error);
     throw error;
@@ -61,31 +85,38 @@ export const fetchCompanyInfo = async (symbol) => {
 // Fetch time series data for charts
 export const fetchTimeSeriesData = async (symbol, interval = 'daily') => {
   try {
-    // Map intervals to Alpha Vantage functions
-    const functionMap = {
-      daily: 'TIME_SERIES_DAILY',
-      weekly: 'TIME_SERIES_WEEKLY',
-      monthly: 'TIME_SERIES_MONTHLY'
-    };
+    // Calculate date range based on interval
+    const endDate = Math.floor(Date.now() / 1000);
+    let startDate;
     
-    const func = functionMap[interval] || 'TIME_SERIES_DAILY';
+    switch (interval) {
+      case 'weekly':
+        startDate = endDate - (7 * 24 * 60 * 60 * 52); // 52 weeks
+        break;
+      case 'monthly':
+        startDate = endDate - (30 * 24 * 60 * 60 * 12); // 12 months
+        break;
+      default: // daily
+        startDate = endDate - (24 * 60 * 60 * 365); // 365 days
+    }
+    
+    // For daily data, use daily resolution; for weekly/monthly, use weekly resolution
+    const resolution = interval === 'daily' ? 'D' : interval === 'weekly' ? 'W' : 'M';
     
     const response = await axios.get(
-      `https://www.alphavantage.co/query?function=${func}&symbol=${symbol}&apikey=${API_KEY}`
+      `${BASE_URL}/stock/candle?symbol=${symbol}&resolution=${resolution}&from=${startDate}&to=${endDate}&token=${API_KEY}`
     );
     
-    // Process the data for chart display
-    const timeSeriesKey = `Time Series (${interval === 'daily' ? 'Daily' : interval === 'weekly' ? 'Weekly' : 'Monthly'})`;
-    const timeSeries = response.data[timeSeriesKey];
+    const data = response.data;
     
-    if (timeSeries) {
-      return Object.entries(timeSeries).map(([date, values]) => ({
-        date,
-        open: parseFloat(values['1. open']),
-        high: parseFloat(values['2. high']),
-        low: parseFloat(values['3. low']),
-        close: parseFloat(values['4. close']),
-        volume: parseFloat(values['5. volume']),
+    if (data.s === 'ok' && data.c && data.c.length > 0) {
+      return data.t.map((timestamp, index) => ({
+        date: new Date(timestamp * 1000).toISOString().split('T')[0],
+        open: parseFloat(data.o[index]),
+        high: parseFloat(data.h[index]),
+        low: parseFloat(data.l[index]),
+        close: parseFloat(data.c[index]),
+        volume: parseFloat(data.v[index]),
       })).reverse(); // Most recent first
     }
     
@@ -99,7 +130,7 @@ export const fetchTimeSeriesData = async (symbol, interval = 'daily') => {
 // Fetch market movers using real API calls
 export const fetchMarketMovers = async () => {
   // List of popular stock symbols to query
-  const symbols = ['AAPL', 'MSFT', 'AMZN', 'GOOGL', 'META', 'TSLA', 'NVDA', 'JPM', 'V', 'WMT'];
+  const symbols = ['AAPL', 'MSFT', 'AMZN', 'GOOGL', 'META', 'TSLA', 'WMT'];
   
   try {
     // Make API calls for each symbol in parallel

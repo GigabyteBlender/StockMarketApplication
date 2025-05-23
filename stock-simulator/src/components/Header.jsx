@@ -1,67 +1,94 @@
-import React from 'react';
-import { TrendingUp, TrendingDown, Search } from 'lucide-react';
+import React, { useState } from 'react';
+import { Search, DollarSign, X } from 'lucide-react';
 import './styles/Header.css';
 
 export default function Header({
-	searchTerm,
-	setSearchTerm,
-	handleSearchKeyPress,
-	handleSearch,
-	showSearchResults,
-	searchResults,
-	handleSelectStock,
-	availableCash
+  searchTerm,
+  setSearchTerm,
+  handleSearchKeyPress,
+  availableCash
 }) {
-	return (
-		<header className="header">
-			<div className="logo-container">
-				<TrendingUp className="logo-icon" />
-				<h1 className="app-title">Stock Simulator</h1>
-			</div>
-			<div className="header-controls">
-				<div className="search-container">
-					<input
-						type="text"
-						placeholder="Search for stocks..."
-						className="search-input"
-						value={searchTerm}
-						onChange={(e) => setSearchTerm(e.target.value)}
-						onKeyPress={handleSearchKeyPress}
-					/>
-					<Search
-						className="search-icon"
-						onClick={handleSearch}
-					/>
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
 
-					{/* Search Results Dropdown */}
-					{showSearchResults && searchResults.length > 0 && (
-						<div className="search-results">
-							{searchResults.map((result) => (
-								<div
-									key={result.symbol}
-									className="search-result-item"
-									onClick={() => handleSelectStock(result.symbol)}
-								>
-									<div>
-										<div className="stock-symbol">{result.symbol}</div>
-										<div className="stock-price">${result.price}</div>
-									</div>
-									<div className={`stock-trend ${result.change >= 0 ? 'positive' : 'negative'}`}>
-										{result.change >= 0 ?
-											<TrendingUp className="trend-icon" /> :
-											<TrendingDown className="trend-icon" />
-										}
-										{result.change >= 0 ? '+' : ''}{result.changePercent}%
-									</div>
-								</div>
-							))}
-						</div>
-					)}
-				</div>
-				<div className="balance-display">
-					Balance: ${availableCash.toFixed(2)}
-				</div>
-			</div>
-		</header>
-	);
+  return (
+    <header className="header">
+      <div className="header-container">
+        {/* Logo Section */}
+        <div className="logo-section">
+          <div className="logo-wrapper">
+            <DollarSign className="logo-icon" />
+            <span className="logo-glow" />
+          </div>
+          <div className="brand-text">
+            <span className="app-title">StockSim</span>
+            <span className="app-subtitle">Virtual Trading</span>
+          </div>
+        </div>
+
+        {/* Header Actions */}
+        <div className="header-actions">
+          {/* Mobile Search Toggle */}
+          <button
+            className="search-mobile-toggle"
+            onClick={() => setShowMobileSearch(true)}
+            aria-label="Open search"
+          >
+            <Search className="search-mobile-icon" />
+          </button>
+
+          {/* Desktop Search */}
+          <div className="search-wrapper">
+            <Search className="search-icon" />
+            <input
+              className="search-input"
+              type="text"
+              placeholder="Search stocks..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyPress={handleSearchKeyPress}
+              aria-label="Search"
+            />
+          </div>
+
+          {/* Balance Card */}
+          <div className="balance-card">
+            <div className="balance-icon-wrapper">
+              <DollarSign className="balance-icon" />
+            </div>
+            <div className="balance-content">
+              <span className="balance-label">Balance</span>
+              <span className="balance-amount">${availableCash.toLocaleString()}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Search Overlay */}
+      <div className={`search-expanded${showMobileSearch ? ' active' : ''}`}>
+        <div className="search-expanded-header">
+          <span className="search-expanded-title">Search Stocks</span>
+          <button
+            className="search-close-button"
+            onClick={() => setShowMobileSearch(false)}
+            aria-label="Close search"
+          >
+            <X className="search-mobile-icon" />
+          </button>
+        </div>
+        
+        <div className="search-expanded-input-wrapper">
+          <input
+            className="search-input"
+            type="text"
+            placeholder="Search stocks..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyPress={handleSearchKeyPress}
+            autoFocus
+            aria-label="Search"
+          />
+        </div>
+      </div>
+    </header>
+  );
 }

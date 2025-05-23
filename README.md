@@ -74,13 +74,17 @@ This will install all required dependencies including:
 
 ### Step 3: Configure environment variables
 
-Create a `.env` file in the root directory and add any necessary API keys:
+Create a `.env` file in the root directory of project and add your Finnhub API key:
 
 ```
-REACT_APP_API_KEY=your_stock_api_key_here
+REACT_APP_FINNHUB_API_KEY=your_finnhub_api_key_here
 ```
 
-*Note: You'll need to obtain API keys from your preferred stock data provider (Alpha Vantage, IEX Cloud, etc.).*
+**To get your Finnhub API key:**
+1. Visit [Finnhub.io](https://finnhub.io/)
+2. Sign up for a free account
+3. Go to your dashboard and copy your API key
+4. Paste it in the `.env` file
 
 ## Running the Application
 
@@ -110,6 +114,22 @@ If you get this error, make sure you've installed the Lucide React package:
 npm install lucide-react
 ```
 
+### API Rate Limits
+
+The free Finnhub API has the following limits:
+- 60 API calls/minute
+- 30 symbols/minute for real-time data
+
+If you hit rate limits, the application will fall back to mock data. Consider upgrading to a paid plan for higher limits if needed.
+
+### No Stock Data Returned
+
+If you're getting "No data returned from API" errors:
+1. Verify your API key is correct in the `.env` file
+2. Check that the stock symbol exists and is valid
+3. Ensure you're not hitting API rate limits
+4. Check the browser console for detailed error messages
+
 ## Setting Up the Backend (Optional)
 
 For a complete experience with user accounts and saved portfolios:
@@ -138,19 +158,27 @@ Create a `server.js` file in the server directory with your backend logic.
 node server.js
 ```
 
-## Connecting to Stock Market APIs
+## API Information
 
-This application is designed to work with various stock market data providers. To use real market data:
+This application uses [Finnhub.io](https://finnhub.io/) for real-time stock market data. Finnhub provides:
 
-1. Register for an API key with one of the following services:
-   - [Alpha Vantage](https://www.alphavantage.co/)
-   - [IEX Cloud](https://iexcloud.io/)
-   - [Finnhub](https://finnhub.io/)
-   - [Polygon.io](https://polygon.io/)
+- Real-time stock quotes
+- Company profiles and information
+- Historical stock data (candles)
+- Market data for major exchanges
 
-2. Add your API key to the `.env` file.
+### Finnhub API Endpoints Used:
+- `/quote` - Real-time stock quotes
+- `/stock/profile2` - Company profiles
+- `/stock/candle` - Historical price data
 
-3. Update the API service files to use your chosen provider.
+### Alternative APIs
+
+If you prefer to use a different stock data provider, you can easily modify the `stockService.js` file. Other popular options include:
+- [Alpha Vantage](https://www.alphavantage.co/)
+- [IEX Cloud](https://iexcloud.io/)
+- [Polygon.io](https://polygon.io/)
+- [Yahoo Finance API](https://rapidapi.com/apidojo/api/yahoo-finance1/)
 
 ## Contributing
 
@@ -158,5 +186,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Acknowledgments
 
+- Stock data provided by [Finnhub.io](https://finnhub.io/)
 - Icons provided by [Lucide React](https://lucide.dev/)
 - UI styling with [Tailwind CSS](https://tailwindcss.com/)
