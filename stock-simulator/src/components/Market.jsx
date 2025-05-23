@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, TrendingDown, BarChart2, RotateCcw} from 'lucide-react';
-import axios from 'axios';
 import './styles/Market.css';
 import './styles/Tables.css';
+import { fetchStockPrice } from '../services/stockService';
 
 /**
  * Market Component - Displays market overview, indices, and top movers
@@ -37,7 +37,8 @@ const MarketTab = ({
 	}, []);
 
 	/**
-	 * Fetches current market indices data from Alpha Vantage API
+	 * Fetches current market indices data using the StockService
+	 * Uses ETF symbols as proxies for major market indices
 	 * TODO: Implement the following improvements:
 	 * - Add error handling with retry logic
 	 * - Cache responses to reduce API usage
@@ -45,38 +46,29 @@ const MarketTab = ({
 	 * - Implement rate limiting to avoid API quota exhaustion
 	 */
 	const fetchMarketIndices = async () => {
-		// TODO: Move API key to secure backend environment
-		const API_KEY = process.env.REACT_APP_ALPHA_VANTAGE_API_KEY;
-		
 		try {
 			// Fetch data for major market indices using ETF symbols as proxies
 			// TODO: Consider using actual index data if available from API provider
-			const [sp500Response, dowResponse, nasdaqResponse] = await Promise.all([
-				axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=SPY&apikey=${API_KEY}`),
-				axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=DIA&apikey=${API_KEY}`),
-				axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=QQQ&apikey=${API_KEY}`)
+			const [sp500Data, dowData, nasdaqData] = await Promise.all([
+				fetchStockPrice('SPY'),  // S&P 500 ETF
+				fetchStockPrice('DIA'),  // Dow Jones ETF
+				fetchStockPrice('QQQ')   // NASDAQ ETF
 			]);
-
-			// Parse API responses - Alpha Vantage returns nested object structure
-			const sp500Data = sp500Response.data['Global Quote'];
-			const dowData = dowResponse.data['Global Quote'];
-			const nasdaqData = nasdaqResponse.data['Global Quote'];
 
 			// Update state with fresh market data if all API calls succeeded
 			if (sp500Data && dowData && nasdaqData) {
 				setMarketIndices({
 					sp500: { 
-						price: parseFloat(sp500Data['05. price']),
-						// Remove percentage symbol and convert to number
-						change: parseFloat(sp500Data['10. change percent'].replace('%', ''))
+						price: sp500Data.price,
+						change: sp500Data.changePercent
 					},
 					dowJones: { 
-						price: parseFloat(dowData['05. price']),
-						change: parseFloat(dowData['10. change percent'].replace('%', ''))
+						price: dowData.price,
+						change: dowData.changePercent
 					},
 					nasdaq: { 
-						price: parseFloat(nasdaqData['05. price']),
-						change: parseFloat(nasdaqData['10. change percent'].replace('%', ''))
+						price: nasdaqData.price,
+						change: nasdaqData.changePercent
 					}
 				});
 			}

@@ -7,7 +7,7 @@ import {
 	fetchTransactionHistory,
 	fetchStockPrice,
 	fetchTimeSeriesData
-} from '../services/StockService';
+} from '../services/stockService';
 
 // Import all the tab components that make up the different pages
 import Header from './Header';
