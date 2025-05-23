@@ -2,6 +2,7 @@ import React from 'react';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import './styles/Dashboard.css';
 import './styles/Tables.css';
+import './styles/FilterSearch.css';
 
 /**
  * Dashboard Component - Main overview page for the stock trading application

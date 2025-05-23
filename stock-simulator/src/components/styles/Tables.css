@@ -2,34 +2,37 @@
 .table-container {
   overflow-x: auto;
   border-radius: 0.75rem;
-  border: 1px solid rgba(229, 231, 235, 0.7);
+  border: 1px solid var(--border-secondary);
+  background: var(--bg-gradient-primary);
+  backdrop-filter: var(--backdrop-blur-strong);
   scrollbar-width: thin;
-  scrollbar-color: #cbd5e0 #f7fafc;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 /* Webkit scrollbar styling */
 .table-container::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
 }
 
 .table-container::-webkit-scrollbar-track {
-  background: #f7fafc;
+  background: var(--scrollbar-track);
   border-radius: 8px;
 }
 
 .table-container::-webkit-scrollbar-thumb {
-  background: #cbd5e0;
+  background: var(--scrollbar-thumb);
   border-radius: 8px;
-  transition: background-color 0.2s ease;
+  transition: background-color var(--transition-fast);
 }
 
 .table-container::-webkit-scrollbar-thumb:hover {
-  background: #a0aec0;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .table-container::-webkit-scrollbar-corner {
-  background: #f7fafc;
+  background: var(--scrollbar-track);
 }
 
 /* Table Structure */
@@ -37,13 +40,15 @@
   min-width: 100%;
   border-collapse: separate;
   border-spacing: 0;
+  background: transparent;
 }
 
 .table-header {
-  background-color: #f9fafb;
+  background: var(--bg-tertiary);
   position: sticky;
   top: 0;
   z-index: 10;
+  backdrop-filter: var(--backdrop-blur);
 }
 
 .table-header-cell {
@@ -52,10 +57,11 @@
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  color: #4b5563;
+  color: var(--text-quaternary);
   letter-spacing: 0.05em;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border-secondary);
   position: relative;
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .table-header-cell:after {
@@ -65,7 +71,7 @@
   top: 25%;
   height: 50%;
   width: 1px;
-  background-color: #e5e7eb;
+  background-color: var(--border-secondary);
 }
 
 .table-header-cell:last-child:after {
@@ -73,27 +79,30 @@
 }
 
 .table-body tr {
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast);
+  background: transparent;
 }
 
 .table-body tr:hover {
-  background-color: #f3f4f6;
+  background-color: var(--bg-hover);
+  transform: translateY(-1px);
 }
 
 .table-body tr:not(:last-child) {
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border-secondary);
 }
 
 .table-cell {
   padding: 1.25rem 1.5rem;
   font-size: 0.9375rem;
-  color: #374151;
+  color: var(--text-secondary);
+  background: transparent;
 }
 
 /* Symbol Cell Styles */
 .symbol-cell {
   font-weight: 600;
-  color: #111827;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -107,10 +116,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #eef2ff;
-  color: #4f46e5;
+  background: var(--bg-gradient-accent);
+  color: var(--color-primary);
   font-weight: 600;
   font-size: 0.75rem;
+  border: 1px solid var(--border-primary);
 }
 
 .symbol-text {
@@ -121,28 +131,35 @@
 
 .symbol-name {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--text-tertiary);
   font-weight: 400;
+}
+
+.symbol-code {
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 /* Cell Type Styles */
 .price-cell {
   font-family: 'SF Mono', SFMono-Regular, ui-monospace, monospace;
   font-weight: 500;
+  color: var(--color-primary);
 }
 
 .amount-cell {
   font-family: 'SF Mono', SFMono-Regular, ui-monospace, monospace;
   font-weight: 500;
+  color: var(--text-primary);
 }
 
 .gain-cell {
-  color: #047857;
+  color: var(--color-success);
   font-weight: 500;
 }
 
 .loss-cell {
-  color: #b91c1c;
+  color: var(--color-danger);
   font-weight: 500;
 }
 
@@ -163,20 +180,22 @@
 }
 
 .gain-badge {
-  background-color: rgba(4, 120, 87, 0.1);
-  color: #047857;
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid var(--color-success-border);
 }
 
 .loss-badge {
-  background-color: rgba(185, 28, 28, 0.1);
-  color: #b91c1c;
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger-border);
 }
 
 /* Trend Indicators */
 .trend-up {
   display: flex;
   align-items: center;
-  color: #10b981;
+  color: var(--color-success);
   font-weight: 500;
   gap: 0.25rem;
 }
@@ -184,7 +203,7 @@
 .trend-down {
   display: flex;
   align-items: center;
-  color: #ef4444;
+  color: var(--color-danger);
   font-weight: 500;
   gap: 0.25rem;
 }
@@ -194,194 +213,6 @@
   height: 1rem;
 }
 
-/* Action Buttons */
-.action-button {
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
-  font-size: 0.875rem;
-}
-
-.buy-button {
-  background-color: #ecfdf5;
-  color: #047857;
-}
-
-.buy-button:hover {
-  background-color: #d1fae5;
-  transform: translateY(-1px);
-}
-
-.sell-button {
-  background-color: #fef2f2;
-  color: #b91c1c;
-}
-
-.sell-button:hover {
-  background-color: #fee2e2;
-  transform: translateY(-1px);
-}
-
-/* Empty State */
-.empty-message {
-  padding: 3rem 1.5rem;
-  text-align: center;
-  color: #6b7280;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-.empty-icon {
-  width: 3rem;
-  height: 3rem;
-  color: #9ca3af;
-  opacity: 0.5;
-}
-
-/* Add these classes to your existing Tables.css */
-
-/* Date Cell Styles (from History.css) */
-.date-cell {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.date-primary {
-  font-weight: 500;
-  color: #111827;
-}
-
-.date-secondary {
-  font-size: 0.75rem;
-  color: #6b7280;
-}
-
-/* Symbol Cell Code and Name */
-.symbol-code {
-  font-weight: 600;
-  color: #111827;
-}
-
-/* Total Value Cell (from History.css) */
-.total-value-cell {
-  display: flex;
-  flex-direction: row;
-  gap: 0.25rem;
-}
-
-.total-amount {
-  font-weight: 400;
-  color: #111827;
-}
-
-.total-indicator {
-  font-size: 0.75rem;
-  font-weight: 500;
-  padding: 0.125rem 0.375rem;
-  border-radius: 9999px;
-  width: fit-content;
-}
-
-.buy-indicator {
-  background-color: rgba(4, 120, 87, 0.1);
-  color: #047857;
-}
-
-.sell-indicator {
-  background-color: rgba(185, 28, 28, 0.1);
-  color: #b91c1c;
-}
-
-/* Trade Badges (from History.css) */
-.trade-badge {
-  display: inline-flex;
-  border-radius: 9999px;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  line-height: 1.25rem;
-}
-
-.buy-badge {
-  background-color: rgba(16, 185, 129, 0.1);
-  color: #065f46;
-}
-
-.sell-badge {
-  background-color: rgba(239, 68, 68, 0.1);
-  color: #b91c1c;
-}
-
-/* Status Badges (from History.css) */
-.status-badge {
-  display: inline-flex;
-  border-radius: 9999px;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  line-height: 1.25rem;
-}
-
-.status-completed {
-  background-color: rgba(16, 185, 129, 0.1);
-  color: #065f46;
-}
-
-.status-pending {
-  background-color: rgba(245, 158, 11, 0.1);
-  color: #92400e;
-}
-
-.status-failed {
-  background-color: rgba(239, 68, 68, 0.1);
-  color: #b91c1c;
-}
-
-/* Market-specific styles */
-.market-table-cell-symbol {
-  font-weight: 600;
-  color: #111827;
-}
-
-.btn-trade {
-  background-color: #ecfdf5;
-  color: #047857;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-trade:hover {
-  background-color: #d1fae5;
-  transform: translateY(-1px);
-}
-
-.btn-view {
-  background-color: #fef2f2;
-  color: #b91c1c;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-view:hover {
-  background-color: #fee2e2;
-  transform: translateY(-1px);
-}
-
-/* Trend Value Container */
 .trend-value {
   display: flex;
   flex-direction: column;
@@ -397,11 +228,178 @@
 }
 
 .trend-up-bg {
-  background-color: rgba(4, 120, 87, 0.1);
+  background-color: var(--color-success-bg);
+  border: 1px solid var(--color-success-border);
 }
 
 .trend-down-bg {
-  background-color: rgba(185, 28, 28, 0.1);
+  background-color: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+}
+
+/* Action Buttons */
+.action-button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 0.875rem;
+  backdrop-filter: var(--backdrop-blur);
+}
+
+.buy-button,
+.btn-trade {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border-color: var(--color-success-border);
+}
+
+.buy-button:hover,
+.btn-trade:hover {
+  background: rgba(16, 185, 129, 0.2);
+  transform: var(--hover-transform);
+  box-shadow: 0 4px 16px var(--color-success-border);
+}
+
+.sell-button,
+.btn-view {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  border-color: var(--color-danger-border);
+}
+
+.sell-button:hover,
+.btn-view:hover {
+  background: rgba(239, 68, 68, 0.2);
+  transform: var(--hover-transform);
+  box-shadow: 0 4px 16px var(--color-danger-border);
+}
+
+/* Date Cell Styles */
+.date-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.date-primary {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.date-secondary {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+/* Total Value Cell */
+.total-value-cell {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+}
+
+.total-amount {
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.total-indicator {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.125rem 0.375rem;
+  border-radius: 9999px;
+  width: fit-content;
+}
+
+.buy-indicator {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid var(--color-success-border);
+}
+
+.sell-indicator {
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger-border);
+}
+
+/* Trade Badges */
+.trade-badge {
+  display: inline-flex;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  border: 1px solid transparent;
+}
+
+.buy-badge {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  border-color: var(--color-success-border);
+}
+
+.sell-badge {
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+  border-color: var(--color-danger-border);
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-flex;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  border: 1px solid transparent;
+}
+
+.status-completed {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  border-color: var(--color-success-border);
+}
+
+.status-pending {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+  border-color: var(--color-warning-border);
+}
+
+.status-failed {
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+  border-color: var(--color-danger-border);
+}
+
+/* Market-specific styles */
+.market-table-cell-symbol {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Empty State */
+.empty-message {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--text-tertiary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.empty-icon {
+  width: 3rem;
+  height: 3rem;
+  color: var(--text-quaternary);
+  opacity: 0.5;
 }
 
 /* Button container styling */
@@ -441,4 +439,42 @@
     align-items: flex-start;
     gap: 0.5rem;
   }
+}
+
+/* Additional Dark Theme Enhancements */
+.table-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bg-gradient-subtle);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.table-body tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.table-body tr:nth-child(even):hover {
+  background: var(--bg-hover);
+}
+
+/* Interactive focus states */
+.action-button:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.action-button:active {
+  transform: var(--scale-active);
+}
+
+/* Enhanced symbol icon with gradient */
+.symbol-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bg-gradient-accent);
+  border-radius: inherit;
+  opacity: 0.5;
 }

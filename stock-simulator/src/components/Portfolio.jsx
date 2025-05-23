@@ -3,6 +3,7 @@ import { TrendingUp, TrendingDown } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import './styles/Portfolio.css';
 import './styles/Tables.css';
+import './styles/FilterSearch.css';
 
 /**
  * Portfolio Component - Comprehensive portfolio management and analysis view
@@ -149,7 +150,30 @@ const PortfolioTab = ({
 				{/* Detailed Holdings Table Section */}
 				{/* TODO: Add portfolio analytics like beta, correlation, sector allocation */}
 				<div className="holdings-section">
-					<h3 className="section-title">Holdings Detail</h3>
+					<h3 className="section-title">
+						<span className="section-title-icon">
+							<TrendingUp size={20} />
+						</span>
+						Holdings Detail
+						<div className="section-title-actions">
+							{/* TODO: Implement search functionality with backend filtering */}
+							<div className="holdings-filter">
+								<span className="holdings-filter-icon">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+										<circle cx="11" cy="11" r="8" />
+										<line x1="21" y1="21" x2="16.65" y2="16.65" />
+									</svg>
+								</span>
+								<input
+									type="text"
+									className="holdings-filter-input"
+									placeholder="Search holdings..."
+									// TODO: Add onChange handler to filter portfolio array
+									// onChange={(e) => filterPortfolio(e.target.value)}
+								/>
+							</div>
+						</div>
+					</h3>
 					<div className="table-container">
 						<table className="table">
 							<thead className="table-header">

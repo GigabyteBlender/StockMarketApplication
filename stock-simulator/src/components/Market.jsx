@@ -265,7 +265,7 @@ const MarketTab = ({
 														{/* Trade Button - Opens Buy/Sell Modal */}
 														{/* TODO: Add quick buy functionality with preset amounts */}
 														<button
-															className="btn-trade"
+															className="action-button btn-trade"
 															onClick={() => openTradeModal(stock.symbol, 'BUY')}
 														>
 															Trade
@@ -273,7 +273,7 @@ const MarketTab = ({
 														{/* View Details Button */}
 														{/* TODO: Add stock analysis and news in detailed view */}
 														<button
-															className="btn-view"
+															className="action-button btn-view"
 															onClick={() => handleSelectStock(stock.symbol)}
 														>
 															View
@@ -361,7 +361,7 @@ const MarketTab = ({
 														{/* Trade Button - Could be good buying opportunity */}
 														{/* TODO: Add "Buy the Dip" quick action */}
 														<button
-															className="btn-trade"
+															className="action-button btn-trade"
 															onClick={() => openTradeModal(stock.symbol, 'BUY')}
 														>
 															Trade
@@ -369,7 +369,7 @@ const MarketTab = ({
 														{/* View Details Button - Important for loss analysis */}
 														{/* TODO: Add news integration to explain price drops */}
 														<button
-															className="btn-view"
+															className="action-button btn-view"
 															onClick={() => handleSelectStock(stock.symbol)}
 														>
 															View

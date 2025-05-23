@@ -15,20 +15,53 @@ export default function TradeModal({
 }) {
   if (!isOpen || !selectedStock) return null;
 
+  // Helper function to safely get numeric values
+  const safeNumber = (value, fallback = 0) => {
+    const num = Number(value);
+    return isNaN(num) || !isFinite(num) ? fallback : num;
+  };
+
   const availableShares = portfolio.find(stock => stock.symbol === selectedStock.symbol)?.shares || 0;
-  const stockPrice = selectedStock.price || 0;
-  const estimatedTotal = tradeQuantity * stockPrice;
+  const stockPrice = safeNumber(selectedStock.price, 0);
+  const safeQuantity = Math.max(1, safeNumber(tradeQuantity, 1));
+  const estimatedTotal = safeQuantity * stockPrice;
   
   const isInsufficientFunds = tradeAction === 'BUY' && estimatedTotal > availableCash;
-  const isInsufficientShares = tradeAction === 'SELL' && availableShares < tradeQuantity;
-  const isDisabled = isInsufficientFunds || isInsufficientShares || tradeQuantity <= 0;
+  const isInsufficientShares = tradeAction === 'SELL' && availableShares < safeQuantity;
+  const isDisabled = isInsufficientFunds || isInsufficientShares || safeQuantity <= 0;
 
-  const maxBuyQuantity = Math.floor(availableCash / stockPrice);
+  const maxBuyQuantity = stockPrice > 0 ? Math.floor(availableCash / stockPrice) : 0;
   const maxSellQuantity = availableShares;
 
   const handleMaxQuantity = () => {
     const maxQty = tradeAction === 'BUY' ? maxBuyQuantity : maxSellQuantity;
-    updateTradeQuantity(maxQty - tradeQuantity);
+    if (maxQty > 0) {
+      updateTradeQuantity(maxQty);
+    }
+  };
+
+  const handleQuantityChange = (e) => {
+    const inputValue = e.target.value;
+    
+    // Allow empty string for user to clear input
+    if (inputValue === '') {
+      updateTradeQuantity(1);
+      return;
+    }
+    
+    // Parse and validate the input
+    const numValue = parseInt(inputValue, 10);
+    if (!isNaN(numValue) && isFinite(numValue) && numValue > 0) {
+      const clampedValue = Math.max(1, Math.min(numValue, 999999)); // Reasonable upper limit
+      updateTradeQuantity(clampedValue);
+    }
+  };
+
+  const handleQuantityIncrement = (increment) => {
+    const newQuantity = safeQuantity + increment;
+    if (newQuantity >= 1 && newQuantity <= 999999) {
+      updateTradeQuantity(newQuantity);
+    }
   };
 
   return (
@@ -57,7 +90,12 @@ export default function TradeModal({
             </div>
             <div className="info-card">
               <div className="info-label">Available Cash</div>
-              <div className="info-value cash">${availableCash.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
+              <div className="info-value cash">
+                ${safeNumber(availableCash, 0).toLocaleString('en-US', { 
+                  minimumFractionDigits: 2, 
+                  maximumFractionDigits: 2 
+                })}
+              </div>
             </div>
             <div className="info-card">
               <div className="info-label">Owned Shares</div>
@@ -68,7 +106,11 @@ export default function TradeModal({
           <div className="quantity-section">
             <div className="quantity-header">
               <label className="quantity-label">Quantity</label>
-              <button className="max-button" onClick={handleMaxQuantity}>
+              <button 
+                className="max-button" 
+                onClick={handleMaxQuantity}
+                disabled={(tradeAction === 'BUY' ? maxBuyQuantity : maxSellQuantity) <= 0}
+              >
                 Max: {tradeAction === 'BUY' ? maxBuyQuantity : maxSellQuantity}
               </button>
             </div>
@@ -76,28 +118,28 @@ export default function TradeModal({
             <div className="quantity-input-wrapper">
               <button
                 type="button"
-                onClick={() => updateTradeQuantity(-1)}
+                onClick={() => handleQuantityIncrement(-1)}
                 className="quantity-btn decrease"
-                disabled={tradeQuantity <= 1}
+                disabled={safeQuantity <= 1}
               >
                 <Minus size={16} />
               </button>
               
               <input
                 type="number"
-                value={tradeQuantity}
-                onChange={(e) => {
-                  const value = Math.max(1, parseInt(e.target.value) || 1);
-                  updateTradeQuantity(value - tradeQuantity);
-                }}
+                value={safeQuantity}
+                onChange={handleQuantityChange}
                 className="quantity-input"
                 min="1"
+                max="999999"
+                step="1"
               />
               
               <button
                 type="button"
-                onClick={() => updateTradeQuantity(1)}
+                onClick={() => handleQuantityIncrement(1)}
                 className="quantity-btn increase"
+                disabled={safeQuantity >= 999999}
               >
                 <Plus size={16} />
               </button>
@@ -141,7 +183,7 @@ export default function TradeModal({
             >
               {!isDisabled && <CheckCircle size={16} />}
               <span>
-                {tradeAction === 'BUY' ? 'Buy' : 'Sell'} {tradeQuantity} Share{tradeQuantity !== 1 ? 's' : ''}
+                {tradeAction === 'BUY' ? 'Buy' : 'Sell'} {safeQuantity} Share{safeQuantity !== 1 ? 's' : ''}
               </span>
             </button>
           </div>

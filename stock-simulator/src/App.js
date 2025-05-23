@@ -1,6 +1,7 @@
 // src/App.js
 import React from 'react';
-import './App.css';
+import './styles/App.css';
+import './styles/Global.css';
 import StockSimulator from './components/StockSimulator';
 
 function App() {

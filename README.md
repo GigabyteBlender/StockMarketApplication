@@ -1,191 +1,221 @@
-# Stock Simulator
+# Stock Market Simulator Template
 
-A modern, responsive stock market simulator built with React and Node.js that allows users to practice trading stocks with virtual money.
+<div align="center">
 
-![Stock Simulator Screenshot](example.png)
+![Stock Market Simulator Banner](example.png)
+
+<br>
+
+A comprehensive, modern stock market simulator built with React that enables users to practice trading strategies with virtual money in a risk-free environment. Learn investing fundamentals with real-time market data and advanced portfolio analytics.
+
+<br>
+
+[![License: MIT](https://img.shields.io/badge/copyright-License-blue)](LICENSE)
+[![React](https://img.shields.io/badge/React-18.x-61DAFB?logo=react)](https://reactjs.org/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Node.js CI](https://img.shields.io/badge/build-passing-brightgreen)]()
+
+</div>
+
+---
 
 ## Features
 
-- Dashboard with portfolio summary and key metrics
-- Real-time stock tracking and market data
-- Watchlist for monitoring favorite stocks
-- Transaction history and performance analysis
-- Responsive design for desktop and mobile
+- **📊 Real-time Market Data** - Live stock prices and comprehensive market information via Finnhub API integration
+- **💰 Virtual Portfolio Management** - Practice trading with $10,000 virtual starting capital and realistic market conditions
+- **📈 Interactive Dashboard** - Comprehensive overview of portfolio performance, metrics, and real-time analytics
+- **⭐ Advanced Watchlist** - Monitor and track favorite stocks with customizable alerts and real-time updates
+- **📋 Transaction History** - Detailed record of all trades, portfolio changes, and performance tracking
+- **📱 Cross-Platform Design** - Optimized experience across desktop, tablet, and mobile devices
+- **🔌 API Integration** - Ready to connect with Finnhub, Alpha Vantage, or your custom financial data backend
 
-## File Structure
+---
+
+## 🗂️ Project Structure
 
 ```
-stock-simulator/src/
-├── components/
-│   │   ├── styles/           # styles for components
-│   │   ├── Dashboard.jsx      
-│   │   ├── Portfolio.jsx      
-│   │   ├── Market.jsx         
-│   │   ├── History.jsx        
-│   │   ├── Header.jsx         
-│   │   ├── Sidebar.jsx        
-│   │   ├── TradeModal.jsx     
-│   │   └── StockSimulator.jsx # main component
-│   ├── services/
-│   │   └── stockService.js     
-│   ├── App.css
-│   ├── App.js                 # initilises the stock simulator
-│   ├── index.js
-│   ├── reportWebVital.js
+stock-simulator/
+├── node_modules/        # Dependencies installed via npm/yarn
+├── public/              # Static assets and HTML template
+├── src/                 # Source code for the application
+│   ├── components/      # Reusable UI components
+│   │   ├── styles/          # Component-specific styles
+│   │   ├── Dashboard.jsx    # Main dashboard with portfolio overview
+│   │   ├── Portfolio.jsx    # Portfolio management interface
+│   │   ├── Market.jsx       # Market data and stock search
+│   │   ├── History.jsx      # Transaction history viewer
+│   │   ├── Header.jsx       # Application header and navigation
+│   │   ├── Sidebar.jsx      # Navigation sidebar components
+│   │   ├── TradeModal.jsx   # Buy/sell transaction modal
+│   │   └── StockSimulator.jsx # Main application component
+│   │
+│   ├── services/            # API and business logic
+│   │   └── stockService.js  # Financial data API service layer
+│   │
+│   ├── styles/              # Global styles
+│   │   └── global.css       # App-wide styling rules
+│   │
+│   ├── utils/               # Helper functions
+│   │   ├── formatters.js    # Currency and number formatting
+│   │   └── calculations.js  # Portfolio and performance calculations
+│   │
+│   ├── App.css              # App component styles
+│   ├── App.jsx              # Main application component
+│   ├── index.css            # Entry point styles
+│   └── index.jsx            # Application entry point
 ```
 
-## Useful code snippets
- 
-```jsx
-// Calculate portfolio metrics (include in StockSimulator.jsx)
-const portfolioValue = portfolio.reduce((total, stock) => total + (stock.shares * stock.currentPrice), 0);
-const totalCost = portfolio.reduce((total, stock) => total + (stock.shares * stock.avgPrice), 0);
-const totalGainLoss = portfolioValue - totalCost;
-const gainLossPercent = totalCost > 0 ? ((portfolioValue / totalCost - 1) * 100).toFixed(2) : 0;
-const availableCash = 10000; // Starting amount - would be tracked in a real app
-```
+---
 
-## Prerequisites
+## 🚀 Getting Started
 
-Before you begin, ensure you have the following installed:
-- [Node.js](https://nodejs.org/) (v14.x or later)
-- [npm](https://www.npmjs.com/) (v6.x or later)
+### Prerequisites
 
-## Installation
+- [Node.js](https://nodejs.org/) (v16.0.0 or higher)
+- [npm](https://www.npmjs.com/) (v7.0.0 or higher) or [yarn](https://yarnpkg.com/) (v1.22.0 or higher)
+- [Finnhub API Key](https://finnhub.io/) (free tier available)
 
-### Step 1: Clone the repository
+### Installation
 
+1. Clone the repository
+   ```bash
+   git clone https://github.com/GigabyteBlender/Stock-Market-Simulator.git
+   cd stock-simulator
+   ```
+
+2. Install dependencies
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Set up environment variables
+   ```bash
+   cp .env.example .env
+   # Edit .env with your Finnhub API key
+   ```
+
+### Development
+
+Start the development server:
 ```bash
-git clone https://github.com/yourusername/stock-simulator.git
-cd stock-simulator
+npm start
+# or
+yarn start
 ```
 
-### Step 2: Install dependencies
+Visit [http://localhost:3000](http://localhost:3000) to view the application.
 
+### Building for Production
+
+Create an optimized production build:
 ```bash
-npm install
+npm run build
+# or
+yarn build
 ```
 
-This will install all required dependencies including:
-- React
-- React DOM
-- Lucide React (for icons)
-- Axios (for API requests)
+The build artifacts will be stored in the `build/` directory.
 
-### Step 3: Configure environment variables
+---
 
-Create a `.env` file in the root directory of project and add your Finnhub API key:
+## ⚙️ Configuration
+
+### Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
 
 ```
 REACT_APP_FINNHUB_API_KEY=your_finnhub_api_key_here
 ```
 
-**To get your Finnhub API key:**
-1. Visit [Finnhub.io](https://finnhub.io/)
-2. Sign up for a free account
-3. Go to your dashboard and copy your API key
-4. Paste it in the `.env` file
+### API Integration
 
-## Running the Application
+To connect with your financial data provider:
 
-### Development mode
+1. Obtain API key from [Finnhub.io](https://finnhub.io/) or your preferred provider
+2. Update API endpoint in `.env` file
+3. Configure request parameters in `src/services/stockService.js`
+4. Adjust rate limiting and caching settings as needed
 
-```bash
-npm start
-```
+### Supported Data Providers
 
-This will start the development server. Open [http://localhost:3000](http://localhost:3000) to view the application in your browser.
+- **Finnhub** - Primary integration with comprehensive market data
+- **Alpha Vantage** - Alternative provider with extensive historical data
+- **IEX Cloud** - Real-time market data with flexible pricing
+- **Custom API** - Easily adaptable service layer for any financial data source
 
-### Production build
+---
 
-```bash
-npm run build
-```
+## 🎨 Customization
 
-This creates an optimized production build in the `build` folder.
+### Themes
 
-## Troubleshooting Common Issues
+Modify the theme variables in `src/styles/global.css` to change the application's appearance and color scheme.
 
-### "Cannot find module 'lucide-react'"
+### Adding New Features
 
-If you get this error, make sure you've installed the Lucide React package:
+1. Create new components in the appropriate directories under `src/components/`
+2. Update service layer in `src/services/` for additional API endpoints
+3. Extend utility functions in `src/utils/` for new calculations or formatting
 
-```bash
-npm install lucide-react
-```
+### Portfolio Customization
 
-### API Rate Limits
+- Adjust starting balance in environment variables
+- Modify transaction fees and market hours in configuration
+- Customize watchlist limits and alert thresholds
 
-The free Finnhub API has the following limits:
-- 60 API calls/minute
-- 30 symbols/minute for real-time data
+---
 
-If you hit rate limits, the application will fall back to mock data. Consider upgrading to a paid plan for higher limits if needed.
+## 📋 Roadmap
 
-### No Stock Data Returned
+- [ ] Advanced charting and technical indicators
+- [ ] Options and derivatives trading simulation
+- [ ] Educational content and trading tutorials
+- [ ] Portfolio performance comparison tools
+- [ ] Export portfolio data to CSV/Excel
+- [ ] Mobile app development
+- [ ] Real-time news integration
 
-If you're getting "No data returned from API" errors:
-1. Verify your API key is correct in the `.env` file
-2. Check that the stock symbol exists and is valid
-3. Ensure you're not hitting API rate limits
-4. Check the browser console for detailed error messages
+---
 
-## Setting Up the Backend (Optional)
+## 🤝 Contributing
 
-For a complete experience with user accounts and saved portfolios:
+We welcome contributions from the community! Please check out our [Contribution Guidelines](CONTRIBUTING.md) before submitting a pull request.
 
-### Step 1: Create a server directory
+### Development Guidelines
+- Follow existing code style and conventions
+- Write meaningful commit messages
+- Add tests for new features
+- Update documentation as needed
+- Ensure all tests pass before submitting
 
-```bash
-mkdir server
-cd server
-npm init -y
-```
+---
 
-### Step 2: Install server dependencies
+## 📄 License
 
-```bash
-npm install express cors mongoose dotenv
-```
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### Step 3: Create the server file
+---
 
-Create a `server.js` file in the server directory with your backend logic.
+## 🙏 Acknowledgements
 
-### Step 4: Run the server
+- [React](https://reactjs.org/) - UI library and framework
+- [Finnhub.io](https://finnhub.io/) - Financial market data API
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Lucide React](https://lucide.dev/) - Beautiful icon library
 
-```bash
-node server.js
-```
+---
 
-## API Information
+## 📬 Support & Contact
 
-This application uses [Finnhub.io](https://finnhub.io/) for real-time stock market data. Finnhub provides:
+- Create an [issue](https://github.com/GigabyteBlender/Stock-Market-Simulator/issues) for bug reports or feature requests
+- Check existing issues before creating new ones
+- Email: [support@example.com](mailto:support@example.com)
 
-- Real-time stock quotes
-- Company profiles and information
-- Historical stock data (candles)
-- Market data for major exchanges
+---
 
-### Finnhub API Endpoints Used:
-- `/quote` - Real-time stock quotes
-- `/stock/profile2` - Company profiles
-- `/stock/candle` - Historical price data
-
-### Alternative APIs
-
-If you prefer to use a different stock data provider, you can easily modify the `stockService.js` file. Other popular options include:
-- [Alpha Vantage](https://www.alphavantage.co/)
-- [IEX Cloud](https://iexcloud.io/)
-- [Polygon.io](https://polygon.io/)
-- [Yahoo Finance API](https://rapidapi.com/apidojo/api/yahoo-finance1/)
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## Acknowledgments
-
-- Stock data provided by [Finnhub.io](https://finnhub.io/)
-- Icons provided by [Lucide React](https://lucide.dev/)
-- UI styling with [Tailwind CSS](https://tailwindcss.com/)
+<div align="center">
+  <sub>Built with ❤️ by <a href="https://github.com/GigabyteBlender">GigabyteBlender</a></sub>
+</div>

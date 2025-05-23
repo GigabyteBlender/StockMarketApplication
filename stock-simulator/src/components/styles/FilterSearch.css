@@ -1,0 +1,38 @@
+/* Filter styles matching Dashboard */
+.holdings-filter {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.holdings-filter-icon {
+  position: absolute;
+  left: 0.75rem;
+  color: var(--text-quaternary);
+  z-index: 1;
+}
+
+.holdings-filter-input {
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border: 1px solid var(--border-secondary);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  background: var(--search-bg);
+  transition: var(--transition-fast);
+  min-width: 200px;
+  backdrop-filter: var(--backdrop-blur);
+}
+
+.holdings-filter-input::placeholder {
+  color: var(--text-quaternary);
+}
+
+.holdings-filter-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
+}

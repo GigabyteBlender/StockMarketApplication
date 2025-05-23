@@ -1,0 +1,136 @@
+/* Global Color Variables */
+:root {
+  /* Background Colors */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #1a1a2e;
+  --bg-tertiary: rgba(255, 255, 255, 0.04);
+  --bg-quaternary: rgba(255, 255, 255, 0.06);
+  --bg-hover: rgba(255, 255, 255, 0.08);
+  --bg-hover-strong: rgba(255, 255, 255, 0.12);
+  --bg-active: rgba(255, 255, 255, 0.1);
+  --bg-disabled: rgba(255, 255, 255, 0.1);
+
+  /* Gradient Backgrounds */
+  --bg-gradient-primary: linear-gradient(145deg, #0a0a0f 0%, #1a1a2e 100%);
+  --bg-gradient-accent: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(0, 102, 255, 0.02));
+  --bg-gradient-subtle: linear-gradient(135deg, rgba(0, 212, 255, 0.03), rgba(0, 102, 255, 0.01));
+
+  /* Success Gradients */
+  --bg-gradient-success: linear-gradient(135deg, #10b981, #059669);
+  --bg-gradient-success-hover: linear-gradient(135deg, #059669, #047857);
+
+  /* Danger Gradients */
+  --bg-gradient-danger: linear-gradient(135deg, #ef4444, #dc2626);
+  --bg-gradient-danger-hover: linear-gradient(135deg, #dc2626, #b91c1c);
+
+  /* Shimmer Effect */
+  --shimmer-gradient: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+
+  /* Border Colors */
+  --border-primary: rgba(255, 255, 255, 0.1);
+  --border-secondary: rgba(255, 255, 255, 0.08);
+  --border-tertiary: rgba(255, 255, 255, 0.05);
+  --border-button: rgba(255, 255, 255, 0.2);
+
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.9);
+  --text-tertiary: rgba(255, 255, 255, 0.7);
+  --text-quaternary: rgba(255, 255, 255, 0.6);
+  --text-disabled: rgba(255, 255, 255, 0.4);
+
+  /* Brand Colors */
+  --color-primary: #00d4ff;
+  --color-secondary: #0066ff;
+
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-success-dark: #059669;
+  --color-success-darker: #047857;
+  --color-success-bg: rgba(16, 185, 129, 0.1);
+  --color-success-border: rgba(16, 185, 129, 0.2);
+
+  --color-danger: #ef4444;
+  --color-danger-dark: #dc2626;
+  --color-danger-darker: #b91c1c;
+  --color-danger-bg: rgba(239, 68, 68, 0.1);
+  --color-danger-border: rgba(239, 68, 68, 0.2);
+
+  --color-warning: #f59e0b;
+  --color-warning-dark: #d97706;
+  --color-warning-bg: rgba(245, 158, 11, 0.1);
+  --color-warning-border: rgba(245, 158, 11, 0.2);
+
+  /* Overlay & Modal */
+  --overlay-bg: rgba(0, 0, 0, 0.8);
+  --modal-shadow: 0 32px 64px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --card-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+  --card-shadow-danger: 0 8px 24px rgba(239, 68, 68, 0.4);
+  --card-shadow-hover: 0 12px 32px rgba(16, 185, 129, 0.5);
+  --card-shadow-danger-hover: 0 12px 32px rgba(239, 68, 68, 0.5);
+
+  /* Interactive States */
+  --hover-transform: translateY(-2px);
+  --active-transform: translateY(0);
+  --scale-active: scale(0.95);
+  --rotate-90: rotate(90deg);
+
+  /* Backdrop Filters */
+  --backdrop-blur: blur(8px);
+  --backdrop-blur-strong: blur(20px);
+
+  /* Scrollbar */
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: rgba(255, 255, 255, 0.2);
+  --scrollbar-width: 4px;
+
+  /* Animation Curves */
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Header specific colors */
+  --header-bg: linear-gradient(135deg, #0a0a0f, #1a1a2e);
+  --header-border: rgba(255, 255, 255, 0.08);
+  --header-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  
+  /* Logo colors */
+  --logo-bg: linear-gradient(135deg, #00d4ff, #0066ff);
+  --logo-shadow: 0 8px 24px rgba(0, 212, 255, 0.3);
+  --logo-glow: rgba(0, 212, 255, 0.4);
+  --logo-glow-blur: rgba(0, 212, 255, 0.2);
+  
+  /* Brand text colors */
+  --brand-title-bg: linear-gradient(135deg, #ffffff, #00d4ff);
+  --brand-subtitle-color: rgba(255, 255, 255, 0.6);
+  
+  /* Search colors */
+  --search-bg: rgba(36, 36, 51);
+  --search-bg-focus: rgba(255, 255, 255, 0.08);
+  --search-border: rgba(255, 255, 255, 0.1);
+  --search-border-focus: rgba(0, 212, 255, 0.4);
+  --search-shadow-focus: 0 0 0 2px rgba(0, 212, 255, 0.1);
+  --search-icon-color: rgba(255, 255, 255, 0.6);
+  --search-placeholder: rgba(255, 255, 255, 0.4);
+  --search-hover-bg: rgba(255, 255, 255, 0.1);
+  --search-hover-transform: translateY(-1px);
+  
+  /* Balance card colors */
+  --balance-bg: rgba(255, 255, 255, 0.04);
+  --balance-bg-hover: rgba(255, 255, 255, 0.08);
+  --balance-border: rgba(255, 255, 255, 0.08);
+  --balance-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --balance-icon-bg: linear-gradient(135deg, #10b981, #059669);
+  --balance-icon-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  --balance-label-color: rgba(255, 255, 255, 0.6);
+  
+  /* Mobile search overlay */
+  --search-overlay-bg: linear-gradient(135deg, #0a0a0f, #1a1a2e);
+  --search-close-bg: rgba(255, 255, 255, 0.08);
+  --search-close-bg-hover: rgba(255, 255, 255, 0.12);
+  --search-close-border: rgba(255, 255, 255, 0.15);
+}
