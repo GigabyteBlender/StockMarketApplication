@@ -153,7 +153,7 @@
   }
 }
 
-/* Table Styles - Updated to match Portfolio */
+/* Table Section Headers */
 .table-section {
   margin-bottom: 2.5rem;
   padding: 0.5rem;
@@ -198,152 +198,7 @@
   color: #ffffff;
 }
 
-/* Updated table container to match Portfolio */
-.market-table-container {
-  overflow-x: auto;
-  border-radius: 0.75rem;
-  border: 1px solid rgba(229, 231, 235, 0.7);
-}
-
-.market-table {
-  min-width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-/* Updated table header to match Portfolio */
-.market-table-header {
-  background-color: #f9fafb;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.market-table-header-cell {
-  padding: 1rem 1.5rem;
-  text-align: left;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #4b5563;
-  letter-spacing: 0.05em;
-  border-bottom: 1px solid #e5e7eb;
-  white-space: nowrap;
-  position: relative;
-}
-
-.market-table-header-cell:after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 25%;
-  height: 50%;
-  width: 1px;
-  background-color: #e5e7eb;
-}
-
-.market-table-header-cell:last-child:after {
-  display: none;
-}
-
-/* Updated table cell styles to match Portfolio */
-.market-table-cell {
-  padding: 1.25rem 1.5rem;
-  font-size: 0.9375rem;
-  color: #374151;
-}
-
-.market-table-row {
-  transition: all 0.2s ease;
-}
-
-.market-table-row:hover {
-  background-color: #f3f4f6;
-}
-
-.market-table-row:not(:last-child) {
-  border-bottom: 1px solid #e5e7eb;
-}
-
-/* Updated symbol cell to match Portfolio style */
-.market-table-cell-symbol {
-  font-weight: 600;
-  color: #111827;
-}
-
-/* Updated button styles to match Portfolio */
-.btn-trade {
-  background-color: #ecfdf5;
-  color: #047857;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-trade:hover {
-  background-color: #d1fae5;
-  transform: translateY(-1px);
-}
-
-.btn-view {
-  background-color: #fef2f2;
-  color: #b91c1c;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-view:hover {
-  background-color: #fee2e2;
-  transform: translateY(-1px);
-}
-
-/* Updated trend styles to match Portfolio */
-.trend-up {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-  color: #047857;
-  font-weight: 500;
-}
-
-.trend-down {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-  color: #b91c1c;
-  font-weight: 500;
-}
-
-.trend-value {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.trend-percent {
-  font-size: 0.75rem;
-  font-weight: 500;
-  padding: 0.125rem 0.375rem;
-  border-radius: 9999px;
-  width: fit-content;
-}
-
-.trend-up-bg {
-  background-color: rgba(4, 120, 87, 0.1);
-}
-
-.trend-down-bg {
-  background-color: rgba(185, 28, 28, 0.1);
-}
-
-/* Updated loading message to match Portfolio */
+/* Loading message */
 .loading-message {
   padding: 3rem 1.5rem;
   text-align: center;
@@ -360,65 +215,6 @@
   color: #d1d5db;
 }
 
-/* Portfolio-style symbol cell */
-.symbol-cell {
-  font-weight: 600;
-  color: #111827;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.symbol-icon {
-  position: relative;
-  min-width: 35px;
-  min-height: 35px;
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #eef2ff;
-  color: #4f46e5;
-  font-weight: 600;
-  font-size: 0.75rem;
-}
-
-.symbol-text {
-  display: flex;
-  margin: auto;
-  flex-direction: column;
-}
-
-.symbol-name {
-  font-size: 0.875rem;
-  color: #6b7280;
-  font-weight: 400;
-}
-
-.price-cell {
-  font-family: 'SF Mono', SFMono-Regular, ui-monospace, monospace;
-  font-weight: 500;
-}
-
-.gain-loss-values {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-/* Button container styling */
-.flex {
-  display: flex;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
-.space-x-2 > * + * {
-  margin-left: 0.5rem;
-}
-
 @media (max-width: 1024px) {
   .market-indices-container {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -433,9 +229,5 @@
   
   .market-indices-container {
     grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-  
-  .market-table-cell {
-    padding: 1rem 1rem;
   }
 }
