@@ -125,8 +125,6 @@
   border-radius: 10px;
   padding: 0.5rem 0.5rem;
   transition: all 0.2s ease;
-  box-sizing: border-box;
-  gap: 0.75rem;
 }
 
 .search-icon {
