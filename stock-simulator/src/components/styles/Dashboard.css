@@ -98,12 +98,14 @@
 .portfolio-gain {
   color: #10b981;
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
 .portfolio-loss {
   color: #ef4444;
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
