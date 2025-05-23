@@ -127,6 +127,12 @@
   transition: all 0.2s ease;
 }
 
+.search-wrapper:focus-within {
+  border-color: rgba(0, 212, 255, 0.4);
+  box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .search-icon {
   width: 18px;
   height: 18px;
@@ -136,11 +142,11 @@
 
 .search-input {
   flex: 1;
-  padding: 0.4rem 0.4rem 0.4rem 2rem!important;
-  background: transparent !important;
-  border: none !important;
-  outline: none !important;
-  color: white !important;
+  padding: 0.4rem 0.4rem 0.4rem 2rem;
+  background: transparent ;
+  border: none ;
+  outline: none ;
+  color: white ;
   font-size: 0.95rem;
   font-weight: 500;
   width: 100%;
