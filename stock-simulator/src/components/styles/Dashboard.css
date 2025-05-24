@@ -135,7 +135,6 @@
 .portfolio-gain {
   color: var(--color-success);
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 

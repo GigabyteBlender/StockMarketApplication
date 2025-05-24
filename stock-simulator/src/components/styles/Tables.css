@@ -125,8 +125,9 @@
 
 .symbol-text {
   display: flex;
-  margin: auto;
   flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
 }
 
 .symbol-name {
@@ -439,16 +440,6 @@
     align-items: flex-start;
     gap: 0.5rem;
   }
-}
-
-/* Additional Dark Theme Enhancements */
-.table-container::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--bg-gradient-subtle);
-  pointer-events: none;
-  border-radius: inherit;
 }
 
 .table-body tr:nth-child(even) {
