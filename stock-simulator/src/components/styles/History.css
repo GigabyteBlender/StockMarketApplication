@@ -200,6 +200,10 @@
   z-index: 1;
 }
 
+.filter-option {
+  background-color: var(--option-bg);
+}
+
 .filter-button {
   background: var(--bg-gradient-success);
   color: var(--text-primary);

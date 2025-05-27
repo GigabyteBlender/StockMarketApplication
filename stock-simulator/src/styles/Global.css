@@ -107,6 +107,10 @@
   /* Brand text colors */
   --brand-title-bg: linear-gradient(135deg, #ffffff, #00d4ff);
   --brand-subtitle-color: rgba(255, 255, 255, 0.6);
+
+  /* Option select colors */
+
+  --option-bg: rgb(19, 36, 43);
   
   /* Search colors */
   --search-bg: rgba(36, 36, 51);

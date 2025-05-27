@@ -109,6 +109,24 @@
   position: relative;
   overflow: hidden;
 }
+.recharts-tooltip-wrapper {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.recharts-default-tooltip {
+  background: var(--bg-gradient-primary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-secondary) !important;
+  border-radius: 0.4rem ;
+}
+
+.recharts-tooltip-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
 
 .chart-container::before {
   content: '';

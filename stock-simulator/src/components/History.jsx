@@ -182,9 +182,9 @@ export default function History({ recentTrades }) {
                 value={filterType}
                 onChange={(e) => setFilterType(e.target.value)}
               >
-                <option value="all">All Types</option>
-                <option value="buy">Buy Orders</option>
-                <option value="sell">Sell Orders</option>
+                <option className='filter-option' value="all">All Types</option>
+                <option className='filter-option' value="buy">Buy Orders</option>
+                <option className='filter-option' value="sell">Sell Orders</option>
                 {/* TODO: Add more transaction types: dividend, split, transfer, etc. */}
               </select>
             </div>
@@ -197,11 +197,11 @@ export default function History({ recentTrades }) {
                 value={filterDateRange}
                 onChange={(e) => setFilterDateRange(e.target.value)}
               >
-                <option value="all">All Time</option>
-                <option value="1d">Today</option>
-                <option value="7d">Last 7 Days</option>
-                <option value="30d">Last 30 Days</option>
-                <option value="90d">Last 90 Days</option>
+                <option className='filter-option' value="all">All Time</option>
+                <option className='filter-option' value="1d">Today</option>
+                <option className='filter-option' value="7d">Last 7 Days</option>
+                <option className='filter-option' value="30d">Last 30 Days</option>
+                <option className='filter-option' value="90d">Last 90 Days</option>
                 {/* TODO: Add more ranges: This week, This month, This quarter, This year */}
               </select>
             </div>
